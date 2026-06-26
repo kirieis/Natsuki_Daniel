@@ -1,6 +1,90 @@
 // Smart Travel Gia Lai - Core App Logic
 // Managing SPA Views, State, AI Generation, Chatbot, Voice, Map, AR, Gamification, and Localization
 
+import destinations from "./data.js";
+
+function normalizePlaces(items) {
+  return (items || []).map((place, index) => {
+    const slug = (place.name || "place")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[^a-z0-9\s-]/g, "")
+      .trim()
+      .replace(/\s+/g, "-");
+
+    const ticketPrice = Number(place.ticketPrice) || 0;
+    const isFree = ticketPrice === 0;
+
+    return {
+      ...place,
+      id: slug || `place-${index + 1}`,
+      name: place.name || "Địa điểm",
+      nameEn: place.name || "Destination",
+      desc: place.description || "Một điểm đến đáng khám phá tại Gia Lai.",
+      descEn: place.description || "A destination worth exploring in Gia Lai.",
+      price: isFree ? "Miễn phí" : `${ticketPrice.toLocaleString("vi-VN")}đ`,
+      priceVal: ticketPrice,
+      hours: place.openingHours || "06:00 - 18:00",
+      address: place.accommodation?.address || "Pleiku, Gia Lai",
+      addressEn: place.accommodation?.address || "Pleiku, Gia Lai",
+      img: place.image || "image/final_destination/Chu_Dang_Ya_Volcano.jpg",
+      x: 20 + (index % 4) * 18,
+      y: 18 + (index % 3) * 18,
+      routeTime: `${20 + index * 10} phút`,
+      green: place.category?.includes("nature") || index % 2 === 0,
+      tags: Array.isArray(place.category) ? place.category : ["nature"]
+    };
+  });
+}
+
+const PLACES = normalizePlaces(destinations);
+
+function getPlaceByIdOrAlias(id) {
+  if (!id) return null;
+  const normalizedId = String(id)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+
+  const aliasMap = {
+    "bien-ho": "bien-ho-to-nung",
+    "chu-dang-ya": "chu-dang-ya-volcano",
+    "thac-phu-cuong": "phu-cuong-waterfall",
+    "chua-minh-thanh": "chua-minh-thanh",
+    "chua-buu-minh": "chua-minh-thanh",
+    "vuon-che": "bien-ho-to-nung",
+    "phong-nguyen": "bien-ho-to-nung"
+  };
+
+  const candidateIds = [normalizedId, aliasMap[normalizedId]].filter(Boolean);
+  return PLACES.find(place => candidateIds.includes(place.id)) || PLACES[0] || null;
+}
+
+const CHAT_TEMPLATES = {
+  vi: {
+    welcome: "Xin chào! Tôi là trợ lý AI của Gia Lai Smart Travel. Bạn có thể hỏi về điểm đến, món ăn, hoặc điều chỉnh lịch trình hiện tại.",
+    noApiKeyWarning: "Bạn đang dùng chế độ dự phòng. Tôi vẫn có thể gợi ý thay đổi lịch trình cơ bản.",
+    fallbackResponse: "Tôi có thể gợi ý thêm điểm check-in, đổi sang ít đi bộ hơn, hoặc đề xuất món ăn ngon ở Gia Lai.",
+    responses: [
+      { keys: ["ít đi bộ", "không thích trekking", "không muốn đi bộ"], action: "reduce_trekking", reply: "Tôi đã đề xuất thay thế các điểm trekking bằng trải nghiệm văn hóa và nghỉ dưỡng dễ dàng hơn." },
+      { keys: ["check-in", "sống ảo", "ảnh đẹp"], action: "add_checkin", reply: "Tôi đã thêm một điểm chụp ảnh đẹp phù hợp cho bạn." },
+      { keys: ["ăn", "món ăn", "đồ ăn", "food"], action: "add_food", reply: "Tôi đã gợi ý thêm một điểm thưởng thức ẩm thực Gia Lai cho hành trình." }
+    ]
+  },
+  en: {
+    welcome: "Hello! I’m your Gia Lai Smart Travel AI assistant. You can ask about attractions, food, or adjust the current itinerary.",
+    noApiKeyWarning: "You are currently using fallback mode. I can still suggest basic itinerary changes.",
+    fallbackResponse: "I can suggest more photo spots, lighter walking plans, or local food options in Gia Lai.",
+    responses: [
+      { keys: ["less walking", "not want trekking", "don't like walking"], action: "reduce_trekking", reply: "I’ve suggested replacing trekking stops with easier cultural and resort-style experiences." },
+      { keys: ["check-in", "photo", "instagram", "beautiful view"], action: "add_checkin", reply: "I’ve added a scenic photo spot to your itinerary." },
+      { keys: ["eat", "food", "meal", "restaurant"], action: "add_food", reply: "I’ve added a local food stop to enrich your travel plan." }
+    ]
+  }
+};
+
 // ---- GLOBAL STATE ----
 const appState = {
   lang: "vi",
@@ -21,6 +105,14 @@ const appState = {
 };
 
 // ---- LOCALIZATION DICTIONARY ----
+const TOUR_BADGES = [
+  { id: "nature-lover", name: "Nature Lover", nameEn: "Nature Lover", desc: "Chọn thiên nhiên", descEn: "Choose nature-based experiences" },
+  { id: "culture-explorer", name: "Culture Explorer", nameEn: "Culture Explorer", desc: "Chọn văn hóa", descEn: "Choose cultural experiences" },
+  { id: "foodie", name: "Foodie", nameEn: "Foodie", desc: "Chọn ẩm thực", descEn: "Choose local food" },
+  { id: "trekker", name: "Trekking Fan", nameEn: "Trekking Fan", desc: "Chọn trekking", descEn: "Choose trekking" },
+  { id: "eco-traveler", name: "Eco Traveler", nameEn: "Eco Traveler", desc: "Chọn du lịch xanh", descEn: "Enable eco travel" }
+];
+
 const TRANSLATIONS = {
   vi: {
     brandTitle: "Gia Lai Smart",
@@ -354,6 +446,9 @@ elements.navButtons.forEach(btn => {
   });
 });
 
+window.switchView = switchView;
+window.openPlaceDetail = openPlaceDetail;
+
 // Handle onboarding navbar anchor links (Địa điểm, Khách sạn)
 document.addEventListener("click", (e) => {
   const link = e.target.closest("a.nav-item-link");
@@ -491,6 +586,12 @@ function translateUI() {
   setTxt("txt-settings-label", t.settingsLabel);
   
   // Onboarding
+  const homeExploreLink = document.getElementById("nav-home-explore");
+  const homeDestinationsLink = document.getElementById("nav-home-destinations");
+  const homeHotelsLink = document.getElementById("nav-home-hotels");
+  if (homeExploreLink) homeExploreLink.textContent = appState.lang === "vi" ? "Khám phá" : "Explore";
+  if (homeDestinationsLink) homeDestinationsLink.textContent = appState.lang === "vi" ? "Địa điểm" : "Places";
+  if (homeHotelsLink) homeHotelsLink.textContent = appState.lang === "vi" ? "Khách sạn" : "Hotels";
   setTxt("txt-onboarding-badge", `<i class="fa-solid fa-sparkles"></i> ${t.onboardingBadge}`, true);
   setTxt("txt-onboarding-title", t.onboardingTitle, true);
   setTxt("txt-onboarding-desc", t.onboardingDesc);
@@ -498,6 +599,12 @@ function translateUI() {
   setTxt("txt-float-chat", t.floatChat);
   setTxt("txt-float-reviews", t.floatReviews);
   
+  // Home sections
+  setTxt("txt-destinations-title", appState.lang === "vi" ? "Các địa điểm nổi tiếng" : "Popular Destinations");
+  setTxt("txt-destinations-subtitle", appState.lang === "vi" ? "Gợi ý những điểm đến hàng đầu không thể bỏ qua tại mảnh đất Gia Lai hùng vĩ." : "Highlights of the most inspiring places to visit in Gia Lai.");
+  setTxt("txt-hotels-title", appState.lang === "vi" ? "Địa điểm nghỉ ngơi" : "Stay Options");
+  setTxt("txt-hotels-subtitle", appState.lang === "vi" ? "Lựa chọn điểm dừng chân lý tưởng, tiện nghi cho chuyến hành trình trọn vẹn." : "Comfortable, convenient overnight stays for a complete travel experience.");
+
   // Survey
   setTxt("txt-survey-title", t.surveyTitle);
   setTxt("txt-survey-desc", t.surveyDesc);
@@ -1056,7 +1163,7 @@ function mutateTimelineOnAction(action) {
       day.items = day.items.map(place => {
         if (place.id === "chu-dang-ya") {
           changed = true;
-          return PLACES.find(p => p.id === "chua-minh-thanh"); // fallback spot
+          return getPlaceByIdOrAlias("chua-minh-thanh");
         }
         return place;
       });
@@ -1069,7 +1176,7 @@ function mutateTimelineOnAction(action) {
     });
     
     if (!alreadyHasPine) {
-      appState.itinerary[0].items.push(PLACES.find(p => p.id === "vuon-che"));
+      appState.itinerary[0].items.push(getPlaceByIdOrAlias("vuon-che"));
       changed = true;
     }
   } else if (action === "add_food") {
@@ -1080,7 +1187,7 @@ function mutateTimelineOnAction(action) {
     });
     
     if (!alreadyHasMarket) {
-      appState.itinerary[0].items.push(PLACES.find(p => p.id === "phong-nguyen"));
+      appState.itinerary[0].items.push(getPlaceByIdOrAlias("phong-nguyen"));
       changed = true;
     }
   }
