@@ -105,9 +105,9 @@
             <span class="logo-text">Gia Lai Smart Travel</span>
           </div>
           <div class="navbar-links">
-            <a href="#view-onboarding" class="nav-item-link active">Khám phá</a>
-            <a href="#section-destinations" class="nav-item-link">Địa điểm</a>
-            <a href="#section-hotels" class="nav-item-link">Khách sạn</a>
+            <a href="#view-onboarding" class="nav-item-link active" id="nav-home-explore">Khám phá</a>
+            <a href="#section-destinations" class="nav-item-link" id="nav-home-destinations">Địa điểm</a>
+            <a href="#section-hotels" class="nav-item-link" id="nav-home-hotels">Khách sạn</a>
           </div>
           <div class="navbar-actions">
             <button class="btn-navbar-start" onclick="switchView('survey')">Lên kế hoạch</button>
@@ -134,12 +134,12 @@
         <!-- Popular Destinations Section -->
         <div class="home-section" id="section-destinations">
           <div class="section-header">
-            <h2 class="section-title">Các địa điểm nổi tiếng</h2>
-            <p class="section-subtitle">Gợi ý những điểm đến hàng đầu không thể bỏ qua tại mảnh đất Gia Lai hùng vĩ.</p>
+            <h2 class="section-title" id="txt-destinations-title">Các địa điểm nổi tiếng</h2>
+            <p class="section-subtitle" id="txt-destinations-subtitle">Gợi ý những điểm đến hàng đầu không thể bỏ qua tại mảnh đất Gia Lai hùng vĩ.</p>
           </div>
           <div class="destination-grid">
             <div class="destination-card">
-              <img src="image/Bien_Ho_(To Nung).jpg" alt="Biển Hồ T'Nưng" class="dest-card-img">
+              <img src="image/final_destination/Bien_Ho_(To Nung).jpg" alt="Biển Hồ T'Nưng" class="dest-card-img">
               <div class="dest-card-body">
                 <div class="dest-card-meta">
                   <span class="dest-tag">Thiên nhiên</span>
@@ -154,7 +154,7 @@
               </div>
             </div>
             <div class="destination-card">
-              <img src="image/Chu_Dang_Ya_Volcano.jpg" alt="Núi lửa Chư Đăng Ya" class="dest-card-img">
+              <img src="image/final_destination/Chu_Dang_Ya_Volcano.jpg" alt="Núi lửa Chư Đăng Ya" class="dest-card-img">
               <div class="dest-card-body">
                 <div class="dest-card-meta">
                   <span class="dest-tag">Khám phá</span>
@@ -169,7 +169,7 @@
               </div>
             </div>
             <div class="destination-card">
-              <img src="image/Chua_Minh_Thanh.jpg" alt="Chùa Minh Thành" class="dest-card-img">
+              <img src="image/final_destination/Chua_Minh_Thanh.jpg" alt="Chùa Minh Thành" class="dest-card-img">
               <div class="dest-card-body">
                 <div class="dest-card-meta">
                   <span class="dest-tag">Văn hóa</span>
@@ -184,7 +184,7 @@
               </div>
             </div>
             <div class="destination-card">
-              <img src="image/Phu_Cuong_Waterfall.jpg" alt="Thác Phú Cường" class="dest-card-img">
+              <img src="image/final_destination/Phu_Cuong_Waterfall.jpg" alt="Thác Phú Cường" class="dest-card-img">
               <div class="dest-card-body">
                 <div class="dest-card-meta">
                   <span class="dest-tag">Thiên nhiên</span>
@@ -204,8 +204,8 @@
         <!-- Resting Places Section -->
         <div class="home-section alt-bg" id="section-hotels">
           <div class="section-header">
-            <h2 class="section-title">Địa điểm nghỉ ngơi</h2>
-            <p class="section-subtitle">Lựa chọn điểm dừng chân lý tưởng, tiện nghi cho chuyến hành trình trọn vẹn.</p>
+            <h2 class="section-title" id="txt-hotels-title">Địa điểm nghỉ ngơi</h2>
+            <p class="section-subtitle" id="txt-hotels-subtitle">Lựa chọn điểm dừng chân lý tưởng, tiện nghi cho chuyến hành trình trọn vẹn.</p>
           </div>
           <div class="lodging-grid">
             <div class="lodging-card">
@@ -655,7 +655,7 @@
   <div class="overlay-modal" id="modal-detail">
     <div class="modal-content-card">
       <div class="modal-img-header">
-        <img src="image/Bien_Ho_(To Nung).jpg" alt="Place image" id="img-detail-photo">
+        <img src="image/final_destination/Bien_Ho_(To Nung).jpg" alt="Place image" id="img-detail-photo">
         <button class="btn-modal-close" id="btn-close-detail" aria-label="Close details">
           <i class="fa-solid fa-xmark"></i>
         </button>
@@ -769,7 +769,7 @@
     <!-- AR card overlays -->
     <div class="ar-cards-viewport">
       <!-- Simulated camera stream image inside the view -->
-      <img src="image/Chu_Dang_Ya_Volcano.jpg" alt="AR background stream" class="ar-camera-bg" id="img-ar-feed">
+      <img src="image/final_destination/Chu_Dang_Ya_Volcano.jpg" alt="AR background stream" class="ar-camera-bg" id="img-ar-feed">
       
       <div class="ar-poi-card p1" data-id="bien-ho">
         <span class="ar-poi-name">Biển Hồ T'Nưng</span>
@@ -808,9 +808,9 @@
   </div>
 
   <!-- Data files -->
-  <script src="js/data.js"></script>
+  <script type="module" src="js/data.js"></script>
   <!-- Main application script -->
-  <script src="js/app.js"></script>
+  <script type="module" src="js/app.js"></script>
 
 </body>
 </html>
