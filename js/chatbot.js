@@ -116,6 +116,11 @@ Danh sách các địa điểm được hỗ trợ trong hệ thống (sử dụ
 8. 'quang-truong-dai-doan-ket' (Quảng trường Đại Đoàn Kết) - Gia đình, Văn hóa
 9. 'hang-thong-tram-tuoi' (Hàng thông trăm tuổi) - Check-in, Thiên nhiên
 10. 'chua-buu-minh' (Chùa Bửu Minh) - Văn hóa, Check-in
+11. 'cozy-homestay' (Pleiku Cozy Homestay) - Nghỉ dưỡng, Check-in, Gia đình
+12. 'garden-homestay' (Hani Garden House) - Nghỉ dưỡng, Thiên nhiên, Gia đình
+13. 'flower-homestay' (Nhà Tôi Flower Cottage) - Nghỉ dưỡng, Check-in, Gia đình
+14. 'gong-homestay' (Tây Nguyên Gong Homestay) - Nghỉ dưỡng, Văn hóa, Gia đình
+15. 'eco-resort' (Tiên Sơn Eco Resort) - Nghỉ dưỡng, Thiên nhiên, Check-in
 
 Khi người dùng trò chuyện và muốn thực hiện các thao tác trên lịch trình du lịch (như thêm địa điểm, xóa địa điểm, hoặc đổi lịch trình), bạn HÃY TRẢ LỜI bằng tiếng Việt tự nhiên và LUÔN đính kèm câu lệnh điều khiển dạng thẻ ngoặc vuông ở cuối câu trả lời (hoặc dòng cuối cùng) theo đúng định dạng sau:
 - Để thêm một địa điểm: [ADD: id_dia_diem] (Ví dụ: [ADD: chua-minh-thanh])
@@ -921,6 +926,7 @@ Quy định đặc biệt:
       text.includes("chư đăng ya") || text.includes("thông") || text.includes("vườn chè") || text.includes("phú cường") ||
       text.includes("bửu minh") || text.includes("minh thành") || text.includes("đại đoàn kết") || text.includes("quảng trường") ||
       text.includes("làng ốp") || text.includes("làng jrai") || text.includes("thêm") || text.includes("xóa") || text.includes("bớt") || text.includes("bỏ") ||
+      text.includes("cozy") || text.includes("hani") || text.includes("cottage") || text.includes("resort") || text.includes("homestay") ||
       text.includes("reset") || text.includes("làm lại") || text.includes("khôi phục") || text.includes("sở thích") || text.includes("nhật ký") ||
       text.includes("chào") || text.includes("hi") || text.includes("hello") || text.includes("bản đồ") || text.includes("map");
 
@@ -951,6 +957,21 @@ Quy định đặc biệt:
       if (text.includes("thác phú cường")) {
         return "Tuyệt vời, Thác Phú Cường hùng vĩ đã được thêm vào kế hoạch du lịch của bạn. [ADD: thac-phu-cuong]";
       }
+      if (text.includes("cozy homestay") || text.includes("pleiku cozy")) {
+        return "Mình đã thêm Pleiku Cozy Homestay ấm cúng vào lịch trình của bạn. [ADD: cozy-homestay]";
+      }
+      if (text.includes("hani garden") || text.includes("garden house")) {
+        return "Đã thêm Hani Garden House xanh mát vào danh sách điểm nghỉ ngơi của bạn. [ADD: garden-homestay]";
+      }
+      if (text.includes("flower cottage") || text.includes("nhà tôi flower") || text.includes("hoa giấy")) {
+        return "Mình đã thêm Nhà Tôi Flower Cottage ngập tràn hoa giấy lãng mạn vào lịch trình của bạn. [ADD: flower-homestay]";
+      }
+      if (text.includes("gong homestay") || text.includes("tây nguyên gong")) {
+        return "Đã thêm Tây Nguyên Gong Homestay mang đậm bản sắc Tây Nguyên vào lịch trình. [ADD: gong-homestay]";
+      }
+      if (text.includes("eco resort") || text.includes("tiên sơn eco")) {
+        return "Mình đã thêm khu nghỉ dưỡng sinh thái cao cấp Tiên Sơn Eco Resort vào lịch trình. [ADD: eco-resort]";
+      }
     }
 
     // Command Remove location triggers
@@ -966,6 +987,21 @@ Quy định đặc biệt:
       }
       if (text.includes("chùa minh thành") || text.includes("chùa")) {
         return "Đã xóa địa điểm chùa chiền tâm linh khỏi danh sách điểm đến. [REMOVE: chua-minh-thanh]";
+      }
+      if (text.includes("cozy homestay")) {
+        return "Đã xóa Pleiku Cozy Homestay khỏi lịch trình. [REMOVE: cozy-homestay]";
+      }
+      if (text.includes("hani garden") || text.includes("garden house")) {
+        return "Đã xóa Hani Garden House khỏi lịch trình. [REMOVE: garden-homestay]";
+      }
+      if (text.includes("flower cottage")) {
+        return "Đã xóa Nhà Tôi Flower Cottage khỏi lịch trình. [REMOVE: flower-homestay]";
+      }
+      if (text.includes("gong homestay")) {
+        return "Đã xóa Tây Nguyên Gong Homestay khỏi lịch trình. [REMOVE: gong-homestay]";
+      }
+      if (text.includes("eco resort") || text.includes("tiên sơn")) {
+        return "Đã xóa Tiên Sơn Eco Resort khỏi lịch trình. [REMOVE: eco-resort]";
       }
     }
 
@@ -989,7 +1025,23 @@ Quy định đặc biệt:
     if (text.includes("chư đăng ya") || text.includes("dã quỳ")) {
       return "Núi lửa Chư Đăng Ya nằm ở huyện Chư Păh. Nơi này vốn là núi lửa cổ, nay đất đỏ phì nhiêu phủ đầy hoa màu xanh mướt. Đặc biệt, vào tháng 11, hoa dã quỳ nở vàng rực rực rỡ khắp triền đồi, thu hút đông đảo phượt thủ check-in.";
     }
+    if (text.includes("cozy homestay")) {
+      return "Pleiku Cozy Homestay tọa lạc tại đường Lê Duẩn, TP. Pleiku. Homestay có không gian vô cùng ấm áp, thiết kế nội thất gỗ tinh tế, mang lại cảm giác thoải mái dễ chịu.";
+    }
+    if (text.includes("hani garden") || text.includes("garden house")) {
+      return "Hani Garden House nằm ở đường Phù Đổng, TP. Pleiku, nổi tiếng với không gian sân vườn rộng, xanh mát rợp bóng cây xanh.";
+    }
+    if (text.includes("flower cottage") || text.includes("nhà tôi flower") || text.includes("hoa giấy")) {
+      return "Nhà Tôi Flower Cottage trên đường Hoàng Quốc Việt là một ngôi nhà bằng đá cổ kính thơ mộng được phủ kín bởi những giàn hoa giấy rực rỡ sắc màu.";
+    }
+    if (text.includes("gong homestay") || text.includes("tây nguyên gong")) {
+      return "Tây Nguyên Gong Homestay nằm ở xã Ia Kênh, nổi bật với kiến trúc nhà sàn gỗ truyền thống kết hợp trưng bày cồng chiêng độc đáo của dân tộc Tây Nguyên.";
+    }
+    if (text.includes("eco resort") || text.includes("tiên sơn")) {
+      return "Tiên Sơn Eco Resort ở xã Tân Sơn, Pleiku là khu nghỉ dưỡng sinh thái xanh, sở hữu hồ bơi ngoài trời cùng các bungalow hình tam giác độc đáo tựa lưng vào sườn núi.";
+    }
 
     return "Gia Lai Travel Buddy đã ghi nhận ý kiến của bạn. Để sửa đổi lịch trình của bạn, bạn có thể nói 'thêm Chùa Minh Thành', 'bớt trekking' hoặc 'ăn gì ở đây' để mình hỗ trợ tốt nhất nhé!";
+
   }
 })();

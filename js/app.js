@@ -354,6 +354,36 @@ elements.navButtons.forEach(btn => {
   });
 });
 
+// Handle onboarding navbar anchor links (Địa điểm, Khách sạn)
+document.addEventListener("click", (e) => {
+  const link = e.target.closest("a.nav-item-link");
+  if (!link) return;
+  const href = link.getAttribute("href");
+  if (!href || !href.startsWith("#") || href === "#") return;
+
+  const targetId = href.slice(1); // e.g. "section-destinations"
+  const targetEl = document.getElementById(targetId);
+  if (!targetEl) return;
+
+  e.preventDefault();
+
+  // If the onboarding view is not active, switch to it first, then scroll
+  const onboardingView = document.getElementById("view-onboarding");
+  if (onboardingView && !onboardingView.classList.contains("active")) {
+    switchView("onboarding");
+    // Wait for display change then scroll
+    setTimeout(() => {
+      targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  } else {
+    targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  // Update active state on navbar links
+  document.querySelectorAll("a.nav-item-link").forEach(a => a.classList.remove("active"));
+  link.classList.add("active");
+});
+
 elements.btnStartTrip.addEventListener("click", () => switchView("survey"));
 elements.btnSurveyBack.addEventListener("click", () => switchView("onboarding"));
 elements.btnSurveyNext.addEventListener("click", () => switchView("trip-details"));

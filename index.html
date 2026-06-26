@@ -97,7 +97,7 @@
     <main class="main-content">
       
       <!-- SCREEN 1: ONBOARDING -->
-      <section class="view-section active" id="view-onboarding">
+      <section class="view-section active" id="view-onboarding" style="scroll-behavior: smooth;">
         <!-- Top Navbar -->
         <nav class="home-navbar">
           <div class="navbar-logo">
@@ -105,9 +105,9 @@
             <span class="logo-text">Gia Lai Smart Travel</span>
           </div>
           <div class="navbar-links">
-            <a href="#" class="nav-item-link active">Khám phá</a>
-            <a href="#" class="nav-item-link">Địa điểm</a>
-            <a href="#" class="nav-item-link">Khách sạn</a>
+            <a href="#view-onboarding" class="nav-item-link active">Khám phá</a>
+            <a href="#section-destinations" class="nav-item-link">Địa điểm</a>
+            <a href="#section-hotels" class="nav-item-link">Khách sạn</a>
             <a href="#" class="nav-item-link">Cộng đồng</a>
           </div>
           <div class="navbar-actions">
@@ -133,7 +133,7 @@
         </div>
 
         <!-- Popular Destinations Section -->
-        <div class="home-section">
+        <div class="home-section" id="section-destinations">
           <div class="section-header">
             <h2 class="section-title">Các địa điểm nổi tiếng</h2>
             <p class="section-subtitle">Gợi ý những điểm đến hàng đầu không thể bỏ qua tại mảnh đất Gia Lai hùng vĩ.</p>
@@ -203,41 +203,60 @@
         </div>
 
         <!-- Resting Places Section -->
-        <div class="home-section alt-bg">
+        <div class="home-section alt-bg" id="section-hotels">
           <div class="section-header">
             <h2 class="section-title">Địa điểm nghỉ ngơi</h2>
             <p class="section-subtitle">Lựa chọn điểm dừng chân lý tưởng, tiện nghi cho chuyến hành trình trọn vẹn.</p>
           </div>
           <div class="lodging-grid">
             <div class="lodging-card">
-              <img src="image/Ky_Co.jpg" alt="Pleiku Hotel" class="lodge-card-img">
+              <img src="image/rest/cozy-homestay.png" alt="Pleiku Cozy Homestay" class="lodge-card-img">
               <div class="lodge-card-body">
-                <h3 class="lodge-name">Khách sạn HAGL Pleiku</h3>
-                <p class="lodge-type">Khách sạn 4 sao • Trung tâm thành phố</p>
-                <div class="lodge-rating">⭐⭐⭐⭐⭐ 4.5</div>
-                <div class="lodge-price">950.000đ/đêm</div>
-              </div>
-            </div>
-            <div class="lodging-card">
-              <img src="image/Eo_Gio.jpg" alt="Pleiku Homestay" class="lodge-card-img">
-              <div class="lodge-card-body">
-                <h3 class="lodge-name">Pleiku Homestay</h3>
-                <p class="lodge-type">Homestay ấm cúng • Gần đồi chè</p>
-                <div class="lodge-rating">⭐⭐⭐⭐ 4.7</div>
+                <h3 class="lodge-name">Pleiku Cozy Homestay</h3>
+                <p class="lodge-type">Homestay ấm cúng • Nội thất gỗ tinh tế</p>
+                <div class="lodge-rating">⭐⭐⭐⭐⭐ 4.8</div>
                 <div class="lodge-price">350.000đ/đêm</div>
               </div>
             </div>
             <div class="lodging-card">
-              <img src="image/Ghenh_Rang_Tien_Sa.jpg" alt="Tien Son Resort" class="lodge-card-img">
+              <img src="image/rest/garden-homestay.png" alt="Hani Garden House" class="lodge-card-img">
               <div class="lodge-card-body">
-                <h3 class="lodge-name">Tiên Sơn Resort</h3>
-                <p class="lodge-type">Resort sinh thái • View núi rừng</p>
+                <h3 class="lodge-name">Hani Garden House</h3>
+                <p class="lodge-type">Homestay sân vườn • View thiên nhiên xanh mát</p>
+                <div class="lodge-rating">⭐⭐⭐⭐⭐ 4.7</div>
+                <div class="lodge-price">400.000đ/đêm</div>
+              </div>
+            </div>
+            <div class="lodging-card">
+              <img src="image/rest/flower-homestay.jpg" alt="Nhà Tôi Flower Cottage" class="lodge-card-img">
+              <div class="lodge-card-body">
+                <h3 class="lodge-name">Nhà Tôi Flower Cottage</h3>
+                <p class="lodge-type">Homestay yên bình • Rực rỡ hoa giấy nghệ thuật</p>
+                <div class="lodge-rating">⭐⭐⭐⭐⭐ 4.9</div>
+                <div class="lodge-price">450.000đ/đêm</div>
+              </div>
+            </div>
+            <div class="lodging-card">
+              <img src="image/rest/gong-homestay.jpg" alt="Tây Nguyên Gong Homestay" class="lodge-card-img">
+              <div class="lodge-card-body">
+                <h3 class="lodge-name">Tây Nguyên Gong Homestay</h3>
+                <p class="lodge-type">Homestay nhà sàn gỗ • Đậm đà bản sắc văn hóa bản địa</p>
                 <div class="lodge-rating">⭐⭐⭐⭐⭐ 4.6</div>
+                <div class="lodge-price">300.000đ/đêm</div>
+              </div>
+            </div>
+            <div class="lodging-card">
+              <img src="image/rest/eco-resort.jpg" alt="Tiên Sơn Eco Resort" class="lodge-card-img">
+              <div class="lodge-card-body">
+                <h3 class="lodge-name">Tiên Sơn Eco Resort</h3>
+                <p class="lodge-type">Resort sinh thái cao cấp • Hồ bơi & Bungalow tam giác</p>
+                <div class="lodge-rating">⭐⭐⭐⭐⭐ 4.9</div>
                 <div class="lodge-price">1.200.000đ/đêm</div>
               </div>
             </div>
           </div>
         </div>
+
 
         <!-- Home Footer -->
         <footer class="home-footer">
