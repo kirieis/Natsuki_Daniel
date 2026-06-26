@@ -348,8 +348,9 @@ const elements = {
   timelineContainer: document.getElementById("timeline-container"),
   
   // Map
-  svgRoutePath: document.getElementById("svg-route-path"),
-  mapSvg: document.getElementById("map-svg-element"),
+  svgRoutePath: document.getElementById("svg-route-path"), // deprecated
+  mapSvg: document.getElementById("map-svg-element"), // deprecated
+  realMap: document.getElementById("real-map"),
   
   // Chatbot
   chatMessagesBox: document.getElementById("chat-messages-box"),
@@ -943,11 +944,37 @@ elements.chkEcoMode.addEventListener("change", (e) => {
   renderItinerary();
 });
 
-// ---- INTERACTIVE SVG MAP ROUTING ----
+// ---- INTERACTIVE LEAFLET MAP ROUTING ----
+let leafletMap = null;
+let leafletMarkers = [];
+let leafletPolyline = null;
+
 function drawRouteMap() {
-  // Clear previous path/pins
-  elements.mapSvg.innerHTML = `<path d="" class="route-path" id="svg-route-path"></path>`;
-  const newSvgRoutePath = document.getElementById("svg-route-path");
+  if (!document.getElementById("real-map")) return;
+  
+  if (!leafletMap) {
+    leafletMap = L.map('real-map').setView([13.98, 108.00], 10);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(leafletMap);
+  }
+  
+  // Clear previous markers
+  leafletMarkers.forEach(m => leafletMap.removeLayer(m));
+  if (leafletPolyline) leafletMap.removeLayer(leafletPolyline);
+  leafletMarkers = [];
+  
+  const coordsMap = {
+    1: [14.053, 108.001], // Bien Ho
+    2: [13.974, 107.994], // Chua Minh Thanh
+    3: [14.133, 108.053], // Chu Dang Ya
+    4: [13.910, 109.300], // Ky Co
+    5: [13.920, 109.310], // Eo Gio
+    6: [13.780, 109.220], // Thap Doi
+    7: [13.940, 108.920], // Quang Trung
+    8: [13.680, 108.020], // Thac Phu Cuong
+    9: [13.750, 109.230]  // Ghenh Rang
+  };
   
   // Collect all places coordinates in timeline order
   const orderedPlaces = [];
@@ -959,43 +986,26 @@ function drawRouteMap() {
   
   if (orderedPlaces.length === 0) return;
   
-  // Build SVG Path string
-  let pathD = `M ${orderedPlaces[0].x} ${orderedPlaces[0].y}`;
-  for (let i = 1; i < orderedPlaces.length; i++) {
-    pathD += ` L ${orderedPlaces[i].x} ${orderedPlaces[i].y}`;
-  }
-  newSvgRoutePath.setAttribute("d", pathD);
+  const latlngs = [];
   
-  // Draw circles for each point
   orderedPlaces.forEach((place, index) => {
-    const pinG = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    pinG.setAttribute("class", "map-pin");
-    pinG.setAttribute("transform", `translate(${place.x}, ${place.y})`);
-    pinG.dataset.id = place.id;
+    const latlng = coordsMap[place.id] || [13.98 + (Math.random()*0.1), 108.00 + (Math.random()*0.1)];
+    latlngs.push(latlng);
     
-    // Circle
-    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    circle.setAttribute("r", "4");
-    circle.setAttribute("cx", "0");
-    circle.setAttribute("cy", "0");
+    const marker = L.marker(latlng).addTo(leafletMap);
+    const placeName = appState.lang === 'vi' ? place.name : place.nameEn;
+    const popupContent = `<b>${index + 1}. ${placeName}</b><br><button onclick="openPlaceDetail(${place.id})" style="margin-top:5px; padding:4px 10px; font-size:12px; cursor:pointer; background:var(--accent); border:none; border-radius:4px; font-weight:bold;">Chi tiết</button>`;
     
-    // Label text
-    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    label.setAttribute("x", "6");
-    label.setAttribute("y", "3");
-    label.setAttribute("class", "map-label");
-    label.textContent = `${index + 1}. ${appState.lang === 'vi' ? place.name : place.nameEn}`;
-    
-    pinG.appendChild(circle);
-    pinG.appendChild(label);
-    
-    // Tooltip trigger on hover/click
-    pinG.addEventListener("click", () => {
-      openPlaceDetail(place.id);
-    });
-    
-    elements.mapSvg.appendChild(pinG);
+    marker.bindPopup(popupContent);
+    leafletMarkers.push(marker);
   });
+  
+  if (latlngs.length > 1) {
+    leafletPolyline = L.polyline(latlngs, {color: '#27AE60', weight: 4, opacity: 0.8, dashArray: '8, 8'}).addTo(leafletMap);
+    leafletMap.fitBounds(leafletPolyline.getBounds(), {padding: [40, 40]});
+  } else if (latlngs.length === 1) {
+    leafletMap.setView(latlngs[0], 13);
+  }
 }
 
 // ---- SCREEN 6: PLACE DETAILS MODAL ----
@@ -1379,7 +1389,9 @@ elements.viewArHud.addEventListener("mousemove", (e) => {
   const x = e.clientX / window.innerWidth;
   const y = e.clientY / window.innerHeight;
   
-  elements.mapSvg.style.transform = `translate(${(x - 0.5) * 30}px, ${(y - 0.5) * 30}px)`;
+  if (elements.mapSvg) {
+    elements.mapSvg.style.transform = `translate(${(x - 0.5) * 30}px, ${(y - 0.5) * 30}px)`;
+  }
 });
 
 // ---- BONUS 5: GAMIFICATION / TOUR BADGES ----
