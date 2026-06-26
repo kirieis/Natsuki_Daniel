@@ -531,9 +531,27 @@ elements.modalSettings.addEventListener("click", (e) => {
 elements.btnSaveSettings.addEventListener("click", () => {
   const key = elements.inpApiKey.value.trim();
   appState.apiKey = key;
-  localStorage.setItem("gemini_api_key", key);
-  updateChatbotStatus(!!key);
-  elements.modalSettings.classList.remove("active");
+  // Try a lightweight validation call to Gemini when user saves key
+  if (key) {
+    addChatBubble(appState.lang === 'vi' ? '⚙️ Đang xác thực API Key...' : '⚙️ Validating API Key...', 'ai');
+    callGeminiAPI('Xin chào. Kiểm tra kết nối. (validation)').then(() => {
+      localStorage.setItem("gemini_api_key", key);
+      updateChatbotStatus(true);
+      addChatBubble(appState.lang === 'vi' ? '✅ Gemini API đã hoạt động.' : '✅ Gemini API is active.', 'ai');
+    }).catch(err => {
+      console.warn('API key validation failed', err);
+      localStorage.setItem("gemini_api_key", key);
+      updateChatbotStatus(false);
+      addChatBubble(appState.lang === 'vi' ? '⚠️ Không thể xác thực API Key. Vui lòng kiểm tra lại trong Cài đặt.' : '⚠️ Unable to validate API Key. Please check it in Settings.', 'ai');
+    }).finally(() => {
+      elements.modalSettings.classList.remove("active");
+    });
+  } else {
+    // No key: clear and update status
+    localStorage.removeItem("gemini_api_key");
+    updateChatbotStatus(false);
+    elements.modalSettings.classList.remove("active");
+  }
 });
 
 function updateChatbotStatus(isKeySet) {
@@ -1010,14 +1028,69 @@ elements.btnDetailDirections.addEventListener("click", () => {
 const localChatHistory = [];
 
 function addChatBubble(text, sender) {
+  // Normalize and deduplicate warning lines
+  const parts = String(text).split(/\n+/).map(p => p.trim()).filter(Boolean);
+  const seenWarnings = [];
+  const outParts = [];
+  let hasConnectionWarn = false;
+  parts.forEach(p => {
+    if (p.startsWith('⚠️')) {
+      const key = p.replace(/⚠️/g, '').trim().toLowerCase();
+      const isConnection = key.includes('kết nối') || key.includes('connection') || key.includes('lỗi kết nối');
+      const isFallback = key.includes('dự phòng') || key.includes('fallback') || key.includes('Bạn đang dùng'.toLowerCase());
+
+      if (isConnection) hasConnectionWarn = true;
+
+      // If we already have a connection warning, skip adding a generic fallback warning
+      if (hasConnectionWarn && isFallback) return;
+
+      if (!seenWarnings.some(s => key.includes(s) || s.includes(key))) {
+        seenWarnings.push(key);
+        outParts.push(p);
+      }
+    } else {
+      outParts.push(p);
+    }
+  });
+
+  let finalText = outParts.join('\n\n');
+
+  // If multiple warnings got concatenated (no separators), extract and normalize them
+  const warnMatches = finalText.match(/⚠️[^⚠️]*/g) || [];
+  if (warnMatches.length > 1) {
+    const uniqueWarns = [];
+    let hasConn = false;
+    warnMatches.forEach(w => {
+      const key = w.replace(/⚠️/g, '').trim().toLowerCase();
+      const isConn = key.includes('kết nối') || key.includes('connection') || key.includes('lỗi kết nối');
+      if (isConn) {
+        hasConn = true;
+        if (!uniqueWarns.some(u => u.toLowerCase().includes('kết nối') || u.toLowerCase().includes('connection'))) {
+          uniqueWarns.push(w.trim());
+        }
+      } else {
+        if (hasConn) return; // prefer connection warnings over generic fallback
+        if (!uniqueWarns.some(u => u.trim().toLowerCase() === w.trim().toLowerCase())) {
+          uniqueWarns.push(w.trim());
+        }
+      }
+    });
+
+    // Remove all warning parts from original text and rebuild
+    const rest = finalText.replace(/⚠️[^⚠️]*/g, '').trim();
+    finalText = uniqueWarns.join('\n\n') + (rest ? '\n\n' + rest : '');
+  }
+
+  // Avoid adding exact duplicate consecutive bubbles
+  const lastBubble = elements.chatMessagesBox.lastElementChild;
+  if (lastBubble && lastBubble.textContent && lastBubble.textContent.trim() === finalText.trim()) return;
+
   const bubble = document.createElement("div");
   bubble.className = `chat-bubble ${sender}`;
-  
-  if (sender === "ai" && text.startsWith("⚠️")) {
+  if (sender === "ai" && finalText.startsWith("⚠️")) {
     bubble.style.borderLeft = "4px solid #E0A93B";
   }
-  
-  bubble.innerHTML = text.replace(/\n/g, "<br>");
+  bubble.innerHTML = finalText.replace(/\n/g, "<br>");
   elements.chatMessagesBox.appendChild(bubble);
   
   // Speak the AI response if speech is toggled or voice response available (Bonus 1)
@@ -1076,11 +1149,28 @@ async function handleChatSubmit() {
   try {
     let aiResponse = "";
     if (appState.apiKey) {
-      aiResponse = await callGeminiAPI(text);
+      try {
+        aiResponse = await callGeminiAPI(text);
+      } catch (apiErr) {
+        // If Gemini fails, mark status and fallback to rule-based responses
+        console.warn('Gemini API error:', apiErr);
+        updateChatbotStatus(false);
+        // Combine warning + fallback into a single AI bubble to avoid duplicates
+        const warn = appState.lang === 'vi' ? '⚠️ Lỗi kết nối với Gemini AI. Đang sử dụng chế độ dự phòng.' : '⚠️ Gemini AI connection error. Using fallback mode.';
+        aiResponse = warn + '\n\n' + handleRuleBasedResponse(text);
+      }
     } else {
-      aiResponse = handleRuleBasedResponse(text);
+      // No API key configured: show single warning + fallback reply
+      const warn = appState.lang === 'vi' ? '⚠️ Bạn đang dùng chế độ dự phòng. Vui lòng cập nhật API Key trong Cài đặt để sử dụng Gemini AI.' : '⚠️ You are using fallback mode. Please configure your API Key in Settings to use Gemini AI.';
+      aiResponse = warn + '\n\n' + handleRuleBasedResponse(text);
     }
     
+    // Sanitize combined response: avoid duplicate generic fallback warning when connection warning exists
+    const genericNoKey = CHAT_TEMPLATES[appState.lang].noApiKeyWarning;
+    if (aiResponse && aiResponse.includes('Lỗi kết nối') && genericNoKey && aiResponse.includes(genericNoKey)) {
+      aiResponse = aiResponse.replace(genericNoKey, '').replace(/\n{2,}/g, '\n\n').trim();
+    }
+
     // Remove typing indicator and show response
     const currentTyping = document.getElementById("chat-typing-indicator");
     if (currentTyping) currentTyping.remove();
@@ -1091,8 +1181,18 @@ async function handleChatSubmit() {
   } catch (err) {
     const currentTyping = document.getElementById("chat-typing-indicator");
     if (currentTyping) currentTyping.remove();
-    
-    addChatBubble("Sorry, I encountered an error. Please check your API key or connection.", "ai");
+
+    console.error('Chat submit error:', err);
+    // If error looks like network/API issue, show localized guidance and fallback
+    const isApiError = err && (String(err).includes('Gemini') || String(err).includes('NetworkError') || String(err).includes('Failed to fetch'));
+    if (isApiError) {
+      updateChatbotStatus(false);
+      const warn = appState.lang === 'vi' ? '⚠️ Lỗi kết nối với Gemini AI. Vui lòng kiểm tra API Key trong Cài đặt hoặc tắt để dùng chế độ dự phòng.' : '⚠️ Gemini AI connection error. Please check your API Key in Settings or continue with fallback mode.';
+      const fallback = handleRuleBasedResponse(text);
+      addChatBubble(warn + '\n\n' + fallback, 'ai');
+    } else {
+      addChatBubble(appState.lang === 'vi' ? 'Xin lỗi, đã xảy ra lỗi. Vui lòng thử lại sau.' : 'Sorry, an error occurred. Please try again later.', 'ai');
+    }
   }
 }
 
@@ -1118,21 +1218,33 @@ async function callGeminiAPI(userPrompt) {
   
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${appState.apiKey}`;
   
-  const response = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contents: [
-        { role: "user", parts: [{ text: systemContext + "\nUser question/request: " + userPrompt }] }
-      ]
-    })
-  });
-  
-  if (!response.ok) {
-    throw new Error("Gemini API Error");
+  let response;
+  try {
+    response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [
+          { role: "user", parts: [{ text: systemContext + "\nUser question/request: " + userPrompt }] }
+        ]
+      })
+    });
+  } catch (networkErr) {
+    throw new Error('NetworkError: ' + (networkErr.message || networkErr));
   }
-  
+
+  if (!response.ok) {
+    let bodyText = '';
+    try { bodyText = await response.text(); } catch (e) { bodyText = ''; }
+    const errMsg = `Gemini API Error: ${response.status} ${response.statusText} ${bodyText}`;
+    throw new Error(errMsg);
+  }
+
   const data = await response.json();
+  // defensive checks
+  if (!data || !data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts) {
+    throw new Error('Gemini API Error: invalid response shape');
+  }
   return data.candidates[0].content.parts[0].text;
 }
 
@@ -1147,10 +1259,9 @@ function handleRuleBasedResponse(inputText) {
   if (matchedRule) {
     // Perform state mutations to visually alter the UI (WOW factor!)
     mutateTimelineOnAction(matchedRule.action);
-    return `⚠️ ${langTemplates.noApiKeyWarning}\n\n${matchedRule.reply}`;
+    return matchedRule.reply;
   }
-  
-  return `⚠️ ${langTemplates.noApiKeyWarning}\n\n${langTemplates.fallbackResponse}`;
+  return langTemplates.fallbackResponse;
 }
 
 // Dynamic Timeline Mutation on specific Chat commands (WOW factor)
