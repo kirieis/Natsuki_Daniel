@@ -8,7 +8,7 @@ const destinations = [
             "A natural freshwater lake located inside an ancient volcanic crater, famous for its peaceful scenery and the poetic beauty of Pleiku.",
 
         rating: 4.8,
-        ticketPrice: 0,
+        ticketPrice: 150000,
 
         openingHours: "06:00 - 18:00",
         estimatedDuration: "2 - 3 hours",
@@ -82,7 +82,7 @@ const destinations = [
             "A unique Buddhist temple featuring impressive Asian-inspired architecture and a peaceful spiritual atmosphere in Pleiku.",
 
         rating: 4.7,
-        ticketPrice: 0,
+        ticketPrice: 120000,
 
         openingHours: "06:00 - 18:00",
         estimatedDuration: "1 - 2 hours",
@@ -155,7 +155,7 @@ const destinations = [
             "A famous volcanic mountain known for its wild beauty, golden wildflowers, and breathtaking landscapes of the Central Highlands.",
 
         rating: 4.8,
-        ticketPrice: 0,
+        ticketPrice: 150000,
 
         openingHours: "Open all day",
         estimatedDuration: "3 - 4 hours",
@@ -201,7 +201,7 @@ const destinations = [
             "A famous beach destination with crystal-clear water, beautiful sandy beaches, and various outdoor activities for visitors.",
 
         rating: 4.6,
-        ticketPrice: 100000,
+        ticketPrice: 170000,
 
         openingHours: "07:00 - 18:00",
         estimatedDuration: "4 - 5 hours",
@@ -261,7 +261,7 @@ const destinations = [
             "A stunning coastal viewpoint famous for sunrise watching, surrounded by unique rocky mountains and the beautiful sea.",
 
         rating: 4.7,
-        ticketPrice: 25000,
+        ticketPrice: 165000,
 
         openingHours: "06:00 - 18:00",
         estimatedDuration: "1 - 2 hours",
@@ -320,7 +320,7 @@ const destinations = [
             "An ancient Cham tower complex located in the city center, featuring unique architecture and historical cultural values.",
 
         rating: 4.4,
-        ticketPrice: 20000,
+        ticketPrice: 100000,
 
         openingHours: "07:00 - 17:00",
         estimatedDuration: "1 hour",
@@ -376,7 +376,7 @@ const destinations = [
             "A museum preserving important historical memories and stories about the legendary Vietnamese hero Quang Trung.",
 
         rating: 4.5,
-        ticketPrice: 50000,
+        ticketPrice: 125000,
 
         openingHours: "07:00 - 17:00",
         estimatedDuration: "2 hours",
@@ -418,7 +418,7 @@ const destinations = [
             "A spectacular waterfall located on a basalt foundation, offering an exciting nature exploration experience.",
 
         rating: 4.6,
-        ticketPrice: 30000,
+        ticketPrice: 135000,
 
         openingHours: "07:00 - 17:30",
         estimatedDuration: "2 - 3 hours",
