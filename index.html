@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Trải nghiệm Gia Lai với nền tảng du lịch thông minh, cá nhân hóa lịch trình tự động bằng trí tuệ nhân tạo AI Chatbot.">
+  <title>Smart Travel Gia Lai - AI Travel Planner</title>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- SIDEBAR NAVIGATION (Desktop) -->
+    <aside class="sidebar" id="app-sidebar">
+      <div class="brand-wrapper">
+        <div class="brand-logo">GL</div>
+        <div class="brand-info">
+          <h2 id="txt-brand-title">Gia Lai Smart</h2>
+          <span id="txt-brand-subtitle">AI Travel Planner</span>
+        </div>
+      </div>
+      
+      <nav class="nav-menu">
+        <li class="nav-item">
+          <button class="nav-btn active" data-target="onboarding" id="btn-nav-onboarding">
+            <i class="fa-solid fa-house"></i> <span id="txt-nav-onboarding">Trang chủ</span>
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-btn" data-target="survey" id="btn-nav-planner">
+            <i class="fa-solid fa-map-location-dot"></i> <span id="txt-nav-planner">Lên kế hoạch</span>
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-btn" data-target="itinerary" id="btn-nav-itinerary">
+            <i class="fa-solid fa-calendar-day"></i> <span id="txt-nav-itinerary">Lịch trình AI</span>
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-btn" data-target="badges" id="btn-nav-badges">
+            <i class="fa-solid fa-award"></i> <span id="txt-nav-badges">Huy hiệu du lịch</span>
+          </button>
+        </li>
+      </nav>
+      
+      <!-- Control Panel (Language, Theme, Settings) -->
+      <div class="control-pane">
+        <div class="control-row">
+          <span class="btn-icon-label" id="txt-lang-label">
+            <i class="fa-solid fa-language"></i> Ngôn ngữ
+          </span>
+          <button class="lang-btn" id="btn-lang-toggle">EN</button>
+        </div>
+        <div class="control-row">
+          <span class="btn-icon-label" id="txt-theme-label">
+            <i class="fa-solid fa-moon"></i> Chế độ tối
+          </span>
+          <label class="switch">
+            <input type="checkbox" id="chk-dark-mode">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="control-row">
+          <button class="btn-icon-label" id="btn-open-settings" style="width:100%; justify-content: flex-start;">
+            <i class="fa-solid fa-gear"></i> <span id="txt-settings-label">Cài đặt API AI</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MOBILE NAVIGATION BOTTOM BAR (Mobile) -->
+    <nav class="mobile-nav" id="app-mobile-nav">
+      <button class="mobile-nav-btn active" data-target="onboarding" id="btn-mob-onboarding">
+        <i class="fa-solid fa-house"></i>
+        <span id="txt-mob-onboarding">Home</span>
+      </button>
+      <button class="mobile-nav-btn" data-target="survey" id="btn-mob-planner">
+        <i class="fa-solid fa-compass"></i>
+        <span id="txt-mob-planner">Planner</span>
+      </button>
+      <button class="mobile-nav-btn" data-target="itinerary" id="btn-mob-itinerary">
+        <i class="fa-solid fa-calendar-day"></i>
+        <span id="txt-mob-itinerary">Itinerary</span>
+      </button>
+      <button class="mobile-nav-btn" data-target="badges" id="btn-mob-badges">
+        <i class="fa-solid fa-award"></i>
+        <span id="txt-mob-badges">Badges</span>
+      </button>
+    </nav>
+
+    <!-- MAIN CONTENT VIEWPORTS -->
+    <main class="main-content">
+      
+      <!-- SCREEN 1: ONBOARDING -->
+      <section class="view-section active" id="view-onboarding">
+        <!-- Top Navbar -->
+        <nav class="home-navbar">
+          <div class="navbar-logo">
+            <span class="logo-icon">🌿</span>
+            <span class="logo-text">Gia Lai Smart Travel</span>
+          </div>
+          <div class="navbar-links">
+            <a href="#" class="nav-item-link active">Khám phá</a>
+            <a href="#" class="nav-item-link">Địa điểm</a>
+            <a href="#" class="nav-item-link">Khách sạn</a>
+            <a href="#" class="nav-item-link">Cộng đồng</a>
+          </div>
+          <div class="navbar-actions">
+            <button class="btn-navbar-start" onclick="switchView('survey')">Lên kế hoạch</button>
+          </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="home-hero">
+          <div class="hero-content">
+            <div class="onboarding-badge" id="txt-onboarding-badge">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> AI-Powered Travel Planner
+            </div>
+            <h1 class="hero-title" id="txt-onboarding-title">Lập lịch trình du lịch<br><span>Gia Lai thông minh</span></h1>
+            <p class="hero-subtitle" id="txt-onboarding-desc">
+              Trải nghiệm hành trình được cá nhân hóa hoàn hảo bởi trí tuệ nhân tạo. Tối ưu chi phí, đường đi và đề xuất điểm check-in lý tưởng.
+            </p>
+            
+            <button class="btn-cta" id="btn-start-trip">
+              <span id="txt-onboarding-cta">Bắt đầu ngay</span> <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Popular Destinations Section -->
+        <div class="home-section">
+          <div class="section-header">
+            <h2 class="section-title">Các địa điểm nổi tiếng</h2>
+            <p class="section-subtitle">Gợi ý những điểm đến hàng đầu không thể bỏ qua tại mảnh đất Gia Lai hùng vĩ.</p>
+          </div>
+          <div class="destination-grid">
+            <div class="destination-card">
+              <img src="image/Bien_Ho_(To Nung).jpg" alt="Biển Hồ T'Nưng" class="dest-card-img">
+              <div class="dest-card-body">
+                <div class="dest-card-meta">
+                  <span class="dest-tag">Thiên nhiên</span>
+                  <span class="dest-rating">⭐ 4.8</span>
+                </div>
+                <h3 class="dest-name">Biển Hồ (Hồ T'Nưng)</h3>
+                <p class="dest-desc">Hồ nước ngọt tự nhiên nằm trên miệng núi lửa cổ đại, được ví như đôi mắt Pleiku trong trẻo.</p>
+                <div class="dest-footer">
+                  <span class="dest-price">10.000đ</span>
+                  <span class="dest-action" onclick="switchView('survey')">Khám phá <i class="fa-solid fa-arrow-right-long"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="destination-card">
+              <img src="image/Chu_Dang_Ya_Volcano.jpg" alt="Núi lửa Chư Đăng Ya" class="dest-card-img">
+              <div class="dest-card-body">
+                <div class="dest-card-meta">
+                  <span class="dest-tag">Khám phá</span>
+                  <span class="dest-rating">⭐ 4.8</span>
+                </div>
+                <h3 class="dest-name">Núi lửa Chư Đăng Ya</h3>
+                <p class="dest-desc">Ngọn núi lửa tắt từ triệu năm, ngập tràn sắc vàng rực của hoa dã quỳ mỗi dịp cuối năm.</p>
+                <div class="dest-footer">
+                  <span class="dest-price">Miễn phí</span>
+                  <span class="dest-action" onclick="switchView('survey')">Khám phá <i class="fa-solid fa-arrow-right-long"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="destination-card">
+              <img src="image/Chua_Minh_Thanh.jpg" alt="Chùa Minh Thành" class="dest-card-img">
+              <div class="dest-card-body">
+                <div class="dest-card-meta">
+                  <span class="dest-tag">Văn hóa</span>
+                  <span class="dest-rating">⭐ 4.7</span>
+                </div>
+                <h3 class="dest-name">Chùa Minh Thành</h3>
+                <p class="dest-desc">Ngôi chùa có kiến trúc độc đáo, nổi bật với ngọn bảo tháp 9 tầng uy nghiêm giữa lòng Pleiku.</p>
+                <div class="dest-footer">
+                  <span class="dest-price">Miễn phí</span>
+                  <span class="dest-action" onclick="switchView('survey')">Khám phá <i class="fa-solid fa-arrow-right-long"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="destination-card">
+              <img src="image/Phu_Cuong_Waterfall.jpg" alt="Thác Phú Cường" class="dest-card-img">
+              <div class="dest-card-body">
+                <div class="dest-card-meta">
+                  <span class="dest-tag">Thiên nhiên</span>
+                  <span class="dest-rating">⭐ 4.6</span>
+                </div>
+                <h3 class="dest-name">Thác Phú Cường</h3>
+                <p class="dest-desc">Dòng thác hùng vĩ đổ từ độ cao hơn 45m trên dòng suối đá bazan huyền thoại.</p>
+                <div class="dest-footer">
+                  <span class="dest-price">30.000đ</span>
+                  <span class="dest-action" onclick="switchView('survey')">Khám phá <i class="fa-solid fa-arrow-right-long"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resting Places Section -->
+        <div class="home-section alt-bg">
+          <div class="section-header">
+            <h2 class="section-title">Địa điểm nghỉ ngơi</h2>
+            <p class="section-subtitle">Lựa chọn điểm dừng chân lý tưởng, tiện nghi cho chuyến hành trình trọn vẹn.</p>
+          </div>
+          <div class="lodging-grid">
+            <div class="lodging-card">
+              <img src="image/Ky_Co.jpg" alt="Pleiku Hotel" class="lodge-card-img">
+              <div class="lodge-card-body">
+                <h3 class="lodge-name">Khách sạn HAGL Pleiku</h3>
+                <p class="lodge-type">Khách sạn 4 sao • Trung tâm thành phố</p>
+                <div class="lodge-rating">⭐⭐⭐⭐⭐ 4.5</div>
+                <div class="lodge-price">950.000đ/đêm</div>
+              </div>
+            </div>
+            <div class="lodging-card">
+              <img src="image/Eo_Gio.jpg" alt="Pleiku Homestay" class="lodge-card-img">
+              <div class="lodge-card-body">
+                <h3 class="lodge-name">Pleiku Homestay</h3>
+                <p class="lodge-type">Homestay ấm cúng • Gần đồi chè</p>
+                <div class="lodge-rating">⭐⭐⭐⭐ 4.7</div>
+                <div class="lodge-price">350.000đ/đêm</div>
+              </div>
+            </div>
+            <div class="lodging-card">
+              <img src="image/Ghenh_Rang_Tien_Sa.jpg" alt="Tien Son Resort" class="lodge-card-img">
+              <div class="lodge-card-body">
+                <h3 class="lodge-name">Tiên Sơn Resort</h3>
+                <p class="lodge-type">Resort sinh thái • View núi rừng</p>
+                <div class="lodge-rating">⭐⭐⭐⭐⭐ 4.6</div>
+                <div class="lodge-price">1.200.000đ/đêm</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Home Footer -->
+        <footer class="home-footer">
+          <div class="footer-content">
+            <div class="footer-info">
+              <div class="navbar-logo">
+                <span class="logo-icon">🌿</span>
+                <span class="logo-text">Gia Lai Smart Travel</span>
+              </div>
+              <p class="footer-desc">Ứng dụng trí tuệ nhân tạo đồng hành cùng bạn trên mọi nẻo đường khám phá Gia Lai kì vĩ.</p>
+            </div>
+            <div class="footer-nav">
+              <h4>Khám phá</h4>
+              <a href="#">Địa điểm</a>
+              <a href="#">Ẩm thực</a>
+              <a href="#">Lễ hội</a>
+            </div>
+            <div class="footer-nav">
+              <h4>Hỗ trợ</h4>
+              <a href="#">Hướng dẫn viên</a>
+              <a href="#">Bản đồ số</a>
+              <a href="#">Liên hệ</a>
+            </div>
+            <div class="footer-nav">
+              <h4>Kết nối</h4>
+              <div class="footer-socials">
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>&copy; 2026 Gia Lai Smart Travel. All rights reserved.</p>
+          </div>
+        </footer>
+      </section>
+
+      <!-- SCREEN 2: PREFERENCE SURVEY -->
+      <section class="view-section" id="view-survey">
+        <div class="inner-page-wrapper">
+          <nav class="home-navbar">
+            <div class="navbar-logo">
+              <span class="logo-icon">🌿</span>
+              <span class="logo-text">Gia Lai Smart Travel</span>
+            </div>
+            <div class="navbar-links">
+              <a href="#" class="nav-item-link" onclick="switchView('onboarding')">Trang chủ</a>
+              <a href="#" class="nav-item-link active">Lên kế hoạch</a>
+              <a href="#" class="nav-item-link" onclick="switchView('itinerary')">Lịch trình AI</a>
+              <a href="#" class="nav-item-link" onclick="switchView('badges')">Huy hiệu</a>
+            </div>
+            <div class="navbar-actions">
+              <button class="btn-navbar-start" onclick="switchView('onboarding')">← Trang chủ</button>
+            </div>
+          </nav>
+          <div class="inner-page-content">
+            <div class="wizard-card">
+              <div class="wizard-header">
+                <h2 class="wizard-title" id="txt-survey-title">Sở thích du lịch</h2>
+                <p class="wizard-subtitle" id="txt-survey-desc">Chọn phong cách trải nghiệm bạn yêu thích để AI phân tích lộ trình phù hợp.</p>
+              </div>
+              
+              <div class="preferences-grid" id="pref-chips-container">
+                <div class="pref-card" data-tag="nature">
+                  <span class="pref-icon">🌿</span>
+                  <span class="pref-name" id="tag-lbl-nature">Thiên nhiên</span>
+                </div>
+                <div class="pref-card" data-tag="culture">
+                  <span class="pref-icon">🏛️</span>
+                  <span class="pref-name" id="tag-lbl-culture">Văn hóa bản địa</span>
+                </div>
+                <div class="pref-card" data-tag="food">
+                  <span class="pref-icon">🍲</span>
+                  <span class="pref-name" id="tag-lbl-food">Ẩm thực phố núi</span>
+                </div>
+                <div class="pref-card" data-tag="coffee">
+                  <span class="pref-icon">☕</span>
+                  <span class="pref-name" id="tag-lbl-coffee">Cà phê Gia Lai</span>
+                </div>
+                <div class="pref-card" data-tag="trekking">
+                  <span class="pref-icon">🥾</span>
+                  <span class="pref-name" id="tag-lbl-trekking">Trekking / Phượt</span>
+                </div>
+                <div class="pref-card" data-tag="family">
+                  <span class="pref-icon">👨‍👩‍👧</span>
+                  <span class="pref-name" id="tag-lbl-family">Gia đình có trẻ nhỏ</span>
+                </div>
+                <div class="pref-card" data-tag="check-in">
+                  <span class="pref-icon">📸</span>
+                  <span class="pref-name" id="tag-lbl-check-in">Góc chụp ảnh sống ảo</span>
+                </div>
+                <div class="pref-card" data-tag="camping">
+                  <span class="pref-icon">⛺</span>
+                  <span class="pref-name" id="tag-lbl-camping">Cắm trại</span>
+                </div>
+                <div class="pref-card" data-tag="resort">
+                  <span class="pref-icon">🏖️</span>
+                  <span class="pref-name" id="tag-lbl-resort">Nghỉ dưỡng</span>
+                </div>
+              </div>
+              
+              <div class="wizard-footer-buttons">
+                <button class="btn-secondary-custom" id="btn-survey-back">
+                  <i class="fa-solid fa-arrow-left"></i> <span id="txt-btn-back">Quay lại</span>
+                </button>
+                <button class="btn-cta" id="btn-survey-next">
+                  <span id="txt-btn-next">Tiếp tục</span> <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 3: TRIP DETAILS -->
+      <section class="view-section" id="view-trip-details">
+        <div class="inner-page-wrapper">
+          <nav class="home-navbar">
+            <div class="navbar-logo">
+              <span class="logo-icon">🌿</span>
+              <span class="logo-text">Gia Lai Smart Travel</span>
+            </div>
+            <div class="navbar-links">
+              <a href="#" class="nav-item-link" onclick="switchView('onboarding')">Trang chủ</a>
+              <a href="#" class="nav-item-link active">Lên kế hoạch</a>
+              <a href="#" class="nav-item-link" onclick="switchView('itinerary')">Lịch trình AI</a>
+              <a href="#" class="nav-item-link" onclick="switchView('badges')">Huy hiệu</a>
+            </div>
+            <div class="navbar-actions">
+              <button class="btn-navbar-start" onclick="switchView('onboarding')">← Trang chủ</button>
+            </div>
+          </nav>
+          <div class="inner-page-content">
+            <div class="wizard-card">
+              <div class="wizard-header">
+                <h2 class="wizard-title" id="txt-trip-title">Thông tin chuyến đi</h2>
+                <p class="wizard-subtitle" id="txt-trip-desc">Cung cấp các thông tin cơ bản để AI tối ưu hóa chi phí và khoảng cách di chuyển.</p>
+              </div>
+
+              <form onsubmit="event.preventDefault();">
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label class="form-label" id="lbl-trip-origin">Điểm xuất phát</label>
+                    <input class="input-control" placeholder="Nhập điểm xuất phát" type="text" id="inp-origin" value="Pleiku, Gia Lai"/>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" id="lbl-trip-guests">Số lượng người</label>
+                    <input class="input-control" type="number" id="inp-guests" value="2"/>
+                  </div>
+                </div>
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label class="form-label" id="lbl-trip-start">Ngày đi</label>
+                    <input class="input-control" type="date" id="inp-start-date"/>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" id="lbl-trip-end">Ngày về</label>
+                    <input class="input-control" type="date" id="inp-end-date"/>
+                  </div>
+                </div>
+
+                <div class="form-group full-width" style="margin-top: 8px;">
+                  <label class="form-label" id="lbl-trip-budget">Mức ngân sách dự kiến</label>
+                  <div class="budget-options">
+                    <button type="button" class="budget-btn selected" data-budget="standard">
+                      <span class="tier" id="txt-budget-std">Tiêu chuẩn</span>
+                      <span class="desc" id="txt-budget-std-desc">Cân bằng chi phí</span>
+                    </button>
+                    <button type="button" class="budget-btn" data-budget="economy">
+                      <span class="tier" id="txt-budget-eco">Tiết kiệm</span>
+                      <span class="desc" id="txt-budget-eco-desc">Ưu tiên điểm miễn phí</span>
+                    </button>
+                    <button type="button" class="budget-btn" data-budget="luxury">
+                      <span class="tier" id="txt-budget-lux">Nghỉ dưỡng</span>
+                      <span class="desc" id="txt-budget-lux-desc">Trải nghiệm cao cấp</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="wizard-footer-buttons">
+                  <button class="btn-secondary-custom" type="button" id="btn-trip-back">
+                    <i class="fa-solid fa-arrow-left"></i> <span id="txt-btn-back2">Quay lại</span>
+                  </button>
+                  <button class="btn-cta" type="button" id="btn-generate-itinerary">
+                    <span id="txt-btn-generate">AI Lập Lịch Trình</span> <i class="fa-solid fa-wand-magic-sparkles"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 4: AI GENERATING LOADING SCREEN -->
+      <section class="view-section" id="view-loading">
+        <div class="inner-page-wrapper" style="display:flex; align-items:center; justify-content:center;">
+          <div class="loading-view">
+            <div class="loader-sparkles">
+              <div class="loader-ring"></div>
+              <i class="fa-solid fa-wand-magic-sparkles sparkle-icon"></i>
+            </div>
+            <h2 class="loading-text" id="txt-loading-title">AI Đang Thiết Kế Lịch Trình...</h2>
+            <p class="loading-steps" id="txt-loading-step">Đang phân tích sở thích của bạn...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 4 & 5: ITINERARY DASHBOARD & CHATBOT -->
+      <section class="view-section" id="view-itinerary">
+        <div class="itinerary-page-wrapper">
+          <nav class="home-navbar">
+            <div class="navbar-logo">
+              <span class="logo-icon">🌿</span>
+              <span class="logo-text">Gia Lai Smart Travel</span>
+            </div>
+            <div class="navbar-links">
+              <a href="#" class="nav-item-link" onclick="switchView('onboarding')">Trang chủ</a>
+              <a href="#" class="nav-item-link" onclick="switchView('survey')">Lên kế hoạch</a>
+              <a href="#" class="nav-item-link active">Lịch trình AI</a>
+              <a href="#" class="nav-item-link" onclick="switchView('badges')">Huy hiệu</a>
+            </div>
+            <div class="navbar-actions">
+              <button class="btn-navbar-start" onclick="switchView('onboarding')">← Trang chủ</button>
+            </div>
+          </nav>
+          <div class="itinerary-page-content">
+        <!-- Summary ribbon of trip details -->
+        <div class="summary-ribbon">
+          <div class="summary-item">
+            <div class="summary-icon"><i class="fa-solid fa-map-pin"></i></div>
+            <div class="summary-info">
+              <span id="txt-ribbon-dest-lbl">Chuyến đi</span>
+              <strong id="txt-ribbon-dest-val">Pleiku - Gia Lai</strong>
+            </div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-icon"><i class="fa-solid fa-wallet"></i></div>
+            <div class="summary-info">
+              <span id="txt-ribbon-cost-lbl">Tổng chi phí</span>
+              <strong id="txt-ribbon-cost-val">~ 2.450.000đ</strong>
+            </div>
+          </div>
+          <div class="match-circle">
+            <div class="circular-progress" id="progress-match" style="--percent-val: 310deg;">
+              <span class="percent-txt" id="txt-ribbon-match-val">86%</span>
+            </div>
+            <div class="summary-info">
+              <span id="txt-ribbon-match-lbl">Mức phù hợp</span>
+              <strong id="txt-ribbon-match-desc">Độ tương thích cao</strong>
+            </div>
+          </div>
+          
+          <!-- Controls (Du lịch xanh, Thời tiết, AR, Share) -->
+          <div class="ribbon-controls">
+            <!-- Green eco travel (Bonus 7) -->
+            <div class="eco-mode-toggle">
+              <i class="fa-solid fa-leaf" style="color: #27AE60;"></i>
+              <span id="txt-eco-label">Du lịch xanh</span>
+              <label class="switch">
+                <input type="checkbox" id="chk-eco-mode">
+                <span class="slider"></span>
+              </label>
+            </div>
+            
+            <!-- Weather suggestion (Bonus 3) -->
+            <div class="weather-widget" id="wdg-weather">
+              <span id="txt-weather-icon">☀️</span>
+              <span id="txt-weather-temp">24°C</span>
+              <div class="weather-tooltip" id="tooltip-weather">
+                <strong id="txt-weather-status">Thời tiết nắng ráo</strong>
+                <p style="font-size:12px; margin-top:6px;" id="txt-weather-advice">Thích hợp cho trekking và chụp ảnh ngoài trời.</p>
+              </div>
+            </div>
+
+            <!-- AR button (Bonus 4) -->
+            <button class="prompt-btn" id="btn-launch-ar" style="background:var(--accent); border-color:var(--accent); color:#000;">
+              <i class="fa-solid fa-cube"></i> AR View
+            </button>
+
+            <!-- Share button (Bonus 6) -->
+            <button class="prompt-btn" id="btn-share-itinerary">
+              <i class="fa-solid fa-share-nodes"></i> <span id="txt-btn-share">Chia sẻ</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          
+          <!-- LEFT PANEL: TIMELINE -->
+          <div class="timeline-panel" id="timeline-container">
+            <!-- Dynamic days will be rendered here -->
+          </div>
+
+          <!-- RIGHT PANEL: INTERACTIVE MAP & AI CHATBOT -->
+          <div class="visual-panel">
+            
+            <!-- Interactive Map Mockup -->
+            <div class="panel-card">
+              <div class="panel-header">
+                <h3 class="panel-title"><i class="fa-solid fa-map"></i> <span id="txt-map-title">Bản đồ lộ trình di chuyển</span></h3>
+              </div>
+              <div class="map-container" id="map-wrap">
+                <!-- SVG map rendering paths and circles -->
+                <svg class="map-svg" viewBox="0 0 100 100" id="map-svg-element">
+                  <!-- Custom path drawn dynamically in JS -->
+                  <path d="" class="route-path" id="svg-route-path"></path>
+                  <!-- Mock locations rendering -->
+                </svg>
+              </div>
+            </div>
+
+            <!-- AI Chatbot (Screen 5) -->
+            <div class="panel-card">
+              <div class="panel-header">
+                <h3 class="panel-title"><i class="fa-solid fa-robot"></i> <span id="txt-chat-title">Trợ lý AI đồng hành</span></h3>
+                <span class="green-badge" id="badge-chat-status">Rule-based Fallback</span>
+              </div>
+              
+              <div class="chat-container">
+                <!-- Messages window -->
+                <div class="chat-box" id="chat-messages-box">
+                  <!-- Welcome message -->
+                </div>
+                
+                <!-- Quick Prompts (Vietnamese / English) -->
+                <div class="quick-prompts-bar" id="quick-prompts-row">
+                  <button class="prompt-btn" data-prompt="Không thích trekking nhiều" id="btn-prompt-trek">🏃‍♂️ Ít đi bộ</button>
+                  <button class="prompt-btn" data-prompt="Gợi ý thêm điểm check-in đẹp" id="btn-prompt-photo">📸 Điểm sống ảo</button>
+                  <button class="prompt-btn" data-prompt="Gợi ý món ăn ngon Gia Lai" id="btn-prompt-food">🍜 Món ăn ngon</button>
+                </div>
+
+                <!-- Text entry & Voice Assistant (Bonus 1) -->
+                <div class="chat-entry">
+                  <input type="text" class="chat-input-field" placeholder="Yêu cầu AI điều chỉnh lịch trình..." id="inp-chat-message">
+                  
+                  <!-- Voice input button -->
+                  <button class="chat-btn-circle" id="btn-voice-input" title="Speech to Text Assistant">
+                    <i class="fa-solid fa-microphone"></i>
+                  </button>
+                  
+                  <!-- Send text button -->
+                  <button class="chat-btn-circle" id="btn-send-message">
+                    <i class="fa-solid fa-paper-plane"></i>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- BONUS 5: GAMIFICATION / BADGES VIEW -->
+      <section class="view-section" id="view-badges">
+        <div class="inner-page-wrapper">
+          <nav class="home-navbar">
+            <div class="navbar-logo">
+              <span class="logo-icon">🌿</span>
+              <span class="logo-text">Gia Lai Smart Travel</span>
+            </div>
+            <div class="navbar-links">
+              <a href="#" class="nav-item-link" onclick="switchView('onboarding')">Trang chủ</a>
+              <a href="#" class="nav-item-link" onclick="switchView('survey')">Lên kế hoạch</a>
+              <a href="#" class="nav-item-link" onclick="switchView('itinerary')">Lịch trình AI</a>
+              <a href="#" class="nav-item-link active">Huy hiệu</a>
+            </div>
+            <div class="navbar-actions">
+              <button class="btn-navbar-start" onclick="switchView('onboarding')">← Trang chủ</button>
+            </div>
+          </nav>
+          <div class="inner-page-content">
+            <div class="wizard-card" style="max-width: 100%;">
+              <div class="wizard-header">
+                <h2 class="wizard-title" id="txt-badges-title">Hệ thống Nhiệm vụ du lịch</h2>
+                <p class="wizard-subtitle" id="txt-badges-desc">Tùy biến lịch trình và hoàn thành các check-in giả lập để mở khóa các huy hiệu quý giá của Gia Lai.</p>
+              </div>
+              
+              <div class="badges-container" id="badges-grid-container">
+                <!-- Render badges -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- SCREEN 6: PLACE DETAIL OVERLAY / MODAL -->
+  <div class="overlay-modal" id="modal-detail">
+    <div class="modal-content-card">
+      <div class="modal-img-header">
+        <img src="image/Bien_Ho_(To Nung).jpg" alt="Place image" id="img-detail-photo">
+        <button class="btn-modal-close" id="btn-close-detail" aria-label="Close details">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body-content">
+        <div class="modal-title-row">
+          <h2 id="txt-detail-name">Biển Hồ</h2>
+          <span class="modal-rating" id="txt-detail-rating">⭐ 4.9</span>
+        </div>
+        <span class="modal-tag" id="txt-detail-tag">Thiên nhiên</span>
+        <p class="modal-description" id="txt-detail-desc">
+          Mặt nước trong xanh quanh năm rộng hàng trăm hecta nằm trên miệng núi lửa cổ đại.
+        </p>
+        
+        <div class="modal-details-list">
+          <div class="modal-detail-row">
+            <span id="lbl-detail-addr">Địa chỉ</span>
+            <span id="txt-detail-addr">Xã Biển Hồ, Pleiku</span>
+          </div>
+          <div class="modal-detail-row">
+            <span id="lbl-detail-hours">Giờ mở cửa</span>
+            <span id="txt-detail-hours">06:00 - 18:00</span>
+          </div>
+          <div class="modal-detail-row">
+            <span id="lbl-detail-ticket">Giá vé</span>
+            <span id="txt-detail-ticket">10.000đ</span>
+          </div>
+        </div>
+        
+        <button class="btn-directions" id="btn-detail-directions">
+          <i class="fa-solid fa-location-arrow"></i> <span id="txt-detail-route">Chỉ đường di chuyển</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS MODAL: CONFIGURE API KEY -->
+  <div class="overlay-modal" id="modal-settings">
+    <div class="modal-content-card" style="max-width: 480px;">
+      <div class="modal-body-content" style="padding: 24px;">
+        <div class="modal-title-row" style="margin-bottom: 12px;">
+          <h2 style="font-size:20px;" id="txt-settings-title"><i class="fa-solid fa-gear"></i> Cấu hình Gemini API</h2>
+          <button class="btn-modal-close" id="btn-close-settings" style="position:static; margin-left: auto;">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <p style="font-size:12px; color: var(--text-light); margin-bottom: 20px;" id="txt-settings-desc">
+          Nhập Gemini API Key từ Google AI Studio để chatbot trò chuyện thông minh thời gian thực (đổi điểm, gợi ý ăn uống). Dữ liệu chỉ được lưu trên trình duyệt của bạn (localStorage).
+        </p>
+        <div class="settings-form">
+          <div class="form-group">
+            <label class="form-label" for="inp-api-key">Gemini API Key</label>
+            <input type="password" id="inp-api-key" class="input-control" placeholder="AIzaSy...">
+          </div>
+          <button class="btn-directions" id="btn-save-settings" style="background:#09261E; box-shadow:none;">
+            <span id="txt-btn-save-api">Lưu cấu hình</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BONUS 6: SHARE ITINERARY MODAL -->
+  <div class="overlay-modal" id="modal-share">
+    <div class="modal-content-card" style="max-width: 460px;">
+      <div class="modal-body-content" style="padding: 24px;">
+        <div class="modal-title-row" style="margin-bottom: 12px;">
+          <h2 style="font-size:20px;" id="txt-share-title"><i class="fa-solid fa-share-nodes"></i> Chia sẻ lộ trình</h2>
+          <button class="btn-modal-close" id="btn-close-share" style="position:static; margin-left: auto;">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="share-modal-body">
+          <p style="font-size: 13px; color: var(--text-light);" id="txt-share-desc">Hành trình du lịch Gia Lai của bạn đã được xuất thành công!</p>
+          
+          <!-- Image preview mockup -->
+          <div class="share-preview-card">
+            <h3 id="txt-share-card-title">Hành trình Gia Lai 3 ngày 2 đêm</h3>
+            <p style="font-size:12px; color: var(--text-light);" id="txt-share-card-desc">Lộ trình xanh bảo vệ môi trường, chi phí ước tính ~2.450.000đ cho 2 người.</p>
+            <div style="font-size:11px; margin-top:12px; color:var(--secondary); font-weight:700;">
+              ✨ Powered by Smart Travel Gia Lai AI Planner
+            </div>
+          </div>
+          
+          <div class="share-links-row">
+            <button class="btn-share-social" title="Facebook"><i class="fa-brands fa-facebook-f"></i></button>
+            <button class="btn-share-social" title="Zalo" style="font-weight: 800; font-size:14px;">Z</button>
+            <button class="btn-share-social" title="Twitter"><i class="fa-brands fa-twitter"></i></button>
+            <button class="btn-share-social" id="btn-copy-share-link" title="Copy Link"><i class="fa-solid fa-copy"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BONUS 4: MOCK AR VIEW SCREEN -->
+  <div class="ar-view-hud" id="view-ar-hud">
+    <div class="ar-scanline"></div>
+    
+    <!-- AR Header -->
+    <div class="ar-header">
+      <div class="ar-title">
+        <div class="ar-dot"></div>
+        <strong id="txt-ar-hud-mode">AR LENS DISCOVERY: GIA LAI</strong>
+      </div>
+      <button class="btn-ar-exit" id="btn-exit-ar">
+        <i class="fa-solid fa-xmark"></i> Exit AR
+      </button>
+    </div>
+
+    <!-- AR card overlays -->
+    <div class="ar-cards-viewport">
+      <!-- Simulated camera stream image inside the view -->
+      <img src="image/Chu_Dang_Ya_Volcano.jpg" alt="AR background stream" class="ar-camera-bg" id="img-ar-feed">
+      
+      <div class="ar-poi-card p1" data-id="bien-ho">
+        <span class="ar-poi-name">Biển Hồ T'Nưng</span>
+        <span class="ar-poi-distance"><i class="fa-solid fa-location-arrow"></i> 1.2 km</span>
+        <span style="font-size:9px; color:var(--accent);">⭐ 4.9 (Thiên nhiên)</span>
+      </div>
+      
+      <div class="ar-poi-card p2" data-id="chu-dang-ya">
+        <span class="ar-poi-name">Núi lửa Chư Đăng Ya</span>
+        <span class="ar-poi-distance"><i class="fa-solid fa-location-arrow"></i> 8.4 km</span>
+        <span style="font-size:9px; color:var(--accent);">⭐ 4.8 (Trekking)</span>
+      </div>
+
+      <div class="ar-poi-card p3" data-id="vuon-che">
+        <span class="ar-poi-name">Đồi chè & Hàng thông</span>
+        <span class="ar-poi-distance"><i class="fa-solid fa-location-arrow"></i> 4.1 km</span>
+        <span style="font-size:9px; color:var(--accent);">⭐ 4.7 (Check-in)</span>
+      </div>
+    </div>
+
+    <!-- AR Footer -->
+    <div class="ar-footer">
+      <span id="txt-ar-hud-help">Xoay camera điện thoại để phát hiện địa điểm quanh bạn</span>
+    </div>
+  </div>
+
+  <!-- GLOBAL FLOATING CONTROLS (Language, Theme, Settings) -->
+  <div class="floating-controls-bar">
+    <button class="control-circle-btn" id="btn-lang-toggle-float" title="Toggle Language">EN</button>
+    <button class="control-circle-btn" id="btn-theme-toggle-float" title="Toggle Dark/Light Mode">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+    <button class="control-circle-btn" id="btn-settings-toggle-float" title="Gemini API Key Settings">
+      <i class="fa-solid fa-gear"></i>
+    </button>
+  </div>
+
+  <!-- Data files -->
+  <script src="js/data.js"></script>
+  <!-- Main application script -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Travel Gia Lai \u2013 Team Kit mẫu</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">GL</span>
+      <span class="brand-name">Smart Travel Gia Lai</span>
+    </div>
+    <nav class="nav">
+      <button class="nav-link active" data-view="home">Khám phá</button>
+      <button class="nav-link" data-view="itinerary">Lịch trình</button>
+      <button class="nav-link" data-view="chat">Hỏi AI</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="view-home" class="view">
+      <div class="hero">
+        <p class="eyebrow">Tây Nguyên đang chờ bạn</p>
+        <h1>Lên lịch trình Gia Lai<br>chỉ trong một câu nói.</h1>
+        <p class="hero-sub">Chọn sở thích, để AI ghép thành chuyến đi hợp với bạn \u2013 từ Biển Hồ đến những vườn cà phê triệu năm tuổi.</p>
+      </div>
+
+      <div class="chip-row" id="chip-row">
+        <button class="chip" data-chip="nature">🌿 Thiên nhiên</button>
+        <button class="chip" data-chip="culture">🏛️ Văn hóa</button>
+        <button class="chip" data-chip="food">🍲 Ẩm thực</button>
+        <button class="chip" data-chip="coffee">☕ Cà phê</button>
+        <button class="chip" data-chip="trekking">🥾 Trekking</button>
+        <button class="chip" data-chip="family">👨‍👩‍👧 Gia đình</button>
+      </div>
+
+      <h2 class="section-title">Điểm đến nổi bật</h2>
+      <div class="card-grid" id="place-grid"></div>
+    </section>
+
+    <section id="view-itinerary" class="view" style="display:none;">
+      <h2 class="section-title">Lịch trình 3 ngày 2 đêm</h2>
+      <p class="muted">Dựa trên sở thích bạn vừa chọn ở mục Khám phá.</p>
+      <div class="timeline" id="timeline"></div>
+      <div class="cost-summary" id="cost-summary"></div>
+    </section>
+
+    <section id="view-chat" class="view" style="display:none;">
+      <h2 class="section-title">Trò chuyện với AI để chỉnh lịch trình</h2>
+      <div class="chat-window" id="chat-window"></div>
+      <form class="chat-form" id="chat-form">
+        <input type="text" id="chat-input" placeholder="Ví dụ: Tôi không thích trekking nhiều..." autocomplete="off">
+        <button type="submit">Gửi</button>
+      </form>
+    </section>
+
+  </main>
+
+  <div class="place-detail-overlay" id="place-overlay">
+    <div class="place-detail-card" id="place-detail-card"></div>
+  </div>
+
+  <footer class="footer">
+    <p>Đây là file mẫu kỹ thuật (team_kit) cho UI/UX Arena SU26 \u2013 không phải bài thi thật.</p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

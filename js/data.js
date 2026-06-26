@@ -1,304 +1,244 @@
-const destinations = [
-    {
-        id: 1,
-        name: "Bien Ho (To Nung)",
-        category: ["nature", "check-in"],
-
-        description:
-            "A natural freshwater lake located inside an ancient volcanic crater, famous for its peaceful scenery and the poetic beauty of Pleiku.",
-
-        rating: 4.8,
-        ticketPrice: 0,
-
-        openingHours: "06:00 - 18:00",
-        estimatedDuration: "2 - 3 hours",
-
-        suitableFor: [
-            "family",
-            "couple",
-            "photography"
-        ],
-
-        tags: [
-            "nature",
-            "sunrise",
-            "relax",
-            "check-in"
-        ],
-
-        image: "image/Bien_Ho_(To Nung).jpg"
-    },
-
-
-    {
-        id: 2,
-        name: "Chua Minh Thanh",
-
-        category: [
-            "culture",
-            "architecture"
-        ],
-
-        description:
-            "A unique Buddhist temple featuring impressive Asian-inspired architecture and a peaceful spiritual atmosphere in Pleiku.",
-
-        rating: 4.7,
-        ticketPrice: 0,
-
-        openingHours: "06:00 - 18:00",
-        estimatedDuration: "1 - 2 hours",
-
-        suitableFor: [
-            "family",
-            "culture lovers",
-            "photography"
-        ],
-
-        tags: [
-            "culture",
-            "architecture",
-            "spiritual"
-        ],
-
-        image: "image/Chua_Minh_Thanh.jpg"
-    },
-
-
-    {
-        id: 3,
-        name: "Chu Dang Ya Volcano",
-
-        category: [
-            "nature",
-            "trekking"
-        ],
-
-        description:
-            "A famous volcanic mountain known for its wild beauty, golden wildflowers, and breathtaking landscapes of the Central Highlands.",
-
-        rating: 4.8,
-        ticketPrice: 0,
-
-        openingHours: "Open all day",
-        estimatedDuration: "3 - 4 hours",
-
-        suitableFor: [
-            "adventure",
-            "young travelers",
-            "photography"
-        ],
-
-        tags: [
-            "trekking",
-            "nature",
-            "camping",
-            "photography"
-        ],
-
-        image: "image/Chu_Dang_Ya_Volcano.jpg"
-    },
-
-
-    {
-        id: 4,
-        name: "Ky Co",
-
-        category: [
-            "nature",
-            "beach",
-            "check-in"
-        ],
-
-        description:
-            "A famous beach destination with crystal-clear water, beautiful sandy beaches, and various outdoor activities for visitors.",
-
-        rating: 4.6,
-        ticketPrice: 100000,
-
-        openingHours: "07:00 - 18:00",
-        estimatedDuration: "4 - 5 hours",
-
-        suitableFor: [
-            "family",
-            "couple",
-            "friends"
-        ],
-
-        tags: [
-            "beach",
-            "swimming",
-            "photography"
-        ],
-
-        image: "image/Ky_Co.jpg"
-    },
-
-
-    {
-        id: 5,
-        name: "Eo Gio",
-
-        category: [
-            "check-in",
-            "nature"
-        ],
-
-        description:
-            "A stunning coastal viewpoint famous for sunrise watching, surrounded by unique rocky mountains and the beautiful sea.",
-
-        rating: 4.7,
-        ticketPrice: 25000,
-
-        openingHours: "06:00 - 18:00",
-        estimatedDuration: "1 - 2 hours",
-
-        suitableFor: [
-            "couple",
-            "photography"
-        ],
-
-        tags: [
-            "sunrise",
-            "sea",
-            "check-in"
-        ],
-
-        image: "image/Eo_Gio.jpg"
-    },
-
-
-    {
-        id: 6,
-        name: "Thap Doi",
-
-        category: [
-            "culture",
-            "history"
-        ],
-
-        description:
-            "An ancient Cham tower complex located in the city center, featuring unique architecture and historical cultural values.",
-
-        rating: 4.4,
-        ticketPrice: 20000,
-
-        openingHours: "07:00 - 17:00",
-        estimatedDuration: "1 hour",
-
-        suitableFor: [
-            "culture lovers",
-            "family"
-        ],
-
-        tags: [
-            "history",
-            "architecture",
-            "culture"
-        ],
-
-        image: "image/Thap_Doi.jpg"
-    },
-
-
-    {
-        id: 7,
-        name: "Quang Trung Museum",
-
-        category: [
-            "culture",
-            "history"
-        ],
-
-        description:
-            "A museum preserving important historical memories and stories about the legendary Vietnamese hero Quang Trung.",
-
-        rating: 4.5,
-        ticketPrice: 50000,
-
-        openingHours: "07:00 - 17:00",
-        estimatedDuration: "2 hours",
-
-        suitableFor: [
-            "family",
-            "history lovers"
-        ],
-
-        tags: [
-            "history",
-            "culture",
-            "education"
-        ],
-
-        image: "image/Quang_Trung_Museum.jpg"
-    },
-
-
-    {
-        id: 8,
-        name: "Phu Cuong Waterfall",
-
-        category: [
-            "nature",
-            "trekking"
-        ],
-
-        description:
-            "A spectacular waterfall located on a basalt foundation, offering an exciting nature exploration experience.",
-
-        rating: 4.6,
-        ticketPrice: 30000,
-
-        openingHours: "07:00 - 17:30",
-        estimatedDuration: "2 - 3 hours",
-
-        suitableFor: [
-            "adventure",
-            "young travelers"
-        ],
-
-        tags: [
-            "waterfall",
-            "nature",
-            "trekking"
-        ],
-
-        image: "image/Phu_Cuong_Waterfall.jpg"
-    },
-
-
-    {
-        id: 9,
-        name: "Ghenh Rang Tien Sa",
-
-        category: [
-            "check-in",
-            "culture"
-        ],
-
-        description:
-            "A famous tourist attraction featuring Hoang Hau Beach and the tomb of poet Han Mac Tu, combining natural beauty and cultural heritage.",
-
-        rating: 4.5,
-        ticketPrice: 0,
-
-        openingHours: "07:00 - 18:00",
-        estimatedDuration: "2 hours",
-
-        suitableFor: [
-            "family",
-            "couple",
-            "photography"
-        ],
-
-        tags: [
-            "sea",
-            "culture",
-            "check-in"
-        ],
-
-        image: "image/Ghenh_Rang_Tien_Sa.jpg"
-    }
+// Global Places database
+const PLACES = [
+  {
+    id: "bien-ho",
+    name: "Biển Hồ (Hồ T'Nưng)",
+    nameEn: "Bien Ho Lake (To Nung)",
+    img: "image/Bien_Ho_(To Nung).jpg",
+    tags: ["nature", "check-in", "family", "resort"],
+    green: true,
+    priceVal: 10000,
+    price: "10.000đ",
+    hours: "06:00 - 18:00",
+    desc: "Được mệnh danh là 'Đôi mắt Pleiku', hồ nước ngọt tự nhiên này nằm trên một miệng núi lửa đã tắt từ hàng triệu năm trước.",
+    descEn: "Known as the 'Eye of Pleiku', this natural freshwater lake is located in an extinct volcanic crater.",
+    address: "Xã Biển Hồ, TP. Pleiku, Gia Lai",
+    addressEn: "Bien Ho Commune, Pleiku City, Gia Lai",
+    rating: 4.8,
+    x: 450,
+    y: 180,
+    routeTime: "15 phút"
+  },
+  {
+    id: "chu-dang-ya",
+    name: "Núi lửa Chư Đăng Ya",
+    nameEn: "Chu Dang Ya Volcano",
+    img: "image/Chu_Dang_Ya_Volcano.jpg",
+    tags: ["nature", "trekking", "camping"],
+    green: true,
+    priceVal: 0,
+    price: "Miễn phí",
+    hours: "Mở cửa cả ngày",
+    desc: "Ngọn núi lửa đã tắt độc đáo với sắc hoa dã quỳ vàng rực rỡ phủ khắp triền đồi vào khoảng tháng 11 hàng năm.",
+    descEn: "An extinct volcano famous for its blooming wild yellow sunflowers on hillsides in November.",
+    address: "Xã Chư Đăng Ya, Huyện Chư Păh, Gia Lai",
+    addressEn: "Chu Dang Ya Commune, Chu Pah District, Gia Lai",
+    rating: 4.8,
+    x: 380,
+    y: 100,
+    routeTime: "35 phút"
+  },
+  {
+    id: "phong-nguyen",
+    name: "Phố đêm Pleiku",
+    nameEn: "Pleiku Night Street",
+    img: "image/Thap_Doi.jpg",
+    tags: ["food", "culture"],
+    green: false,
+    priceVal: 0,
+    price: "Miễn phí",
+    hours: "18:00 - 23:00",
+    desc: "Khu phố ẩm thực sầm uất về đêm của thành phố Pleiku, nơi du khách có thể thưởng thức phở khô, cơm lam gà nướng và cà phê phố núi.",
+    descEn: "A bustling night culinary street in Pleiku City, where visitors can enjoy dry Pho, grilled chicken with bamboo rice, and mountain coffee.",
+    address: "Đường Nguyễn Thiện Thuật, TP. Pleiku, Gia Lai",
+    addressEn: "Nguyen Thien Thuat Street, Pleiku City, Gia Lai",
+    rating: 4.5,
+    x: 480,
+    y: 350,
+    routeTime: "10 phút"
+  },
+  {
+    id: "lang-jrai",
+    name: "Làng văn hóa Jrai (Làng Ốp)",
+    nameEn: "Jrai Cultural Village (Op Village)",
+    img: "image/Quang_Trung_Museum.jpg",
+    tags: ["culture", "family"],
+    green: true,
+    priceVal: 50000,
+    price: "50.000đ",
+    hours: "08:00 - 17:00",
+    desc: "Tìm hiểu bản sắc văn hóa Jrai qua những ngôi nhà rông truyền thống, tiếng cồng chiêng ngân vang và điệu múa xoang đặc sắc.",
+    descEn: "Discover the unique Jrai ethnic culture through traditional communal houses, gongs, and folk dances.",
+    address: "Phường Hoa Lư, TP. Pleiku, Gia Lai",
+    addressEn: "Hoa Lư Ward, Pleiku City, Gia Lai",
+    rating: 4.6,
+    x: 520,
+    y: 310,
+    routeTime: "12 phút"
+  },
+  {
+    id: "thac-phu-cuong",
+    name: "Thác Phú Cường",
+    nameEn: "Phu Cuong Waterfall",
+    img: "image/Phu_Cuong_Waterfall.jpg",
+    tags: ["nature", "trekking", "camping"],
+    green: true,
+    priceVal: 30000,
+    price: "30.000đ",
+    hours: "07:00 - 17:00",
+    desc: "Một trong những thác nước hùng vĩ nhất Gia Lai, dòng nước đổ thẳng từ độ cao 45m xuống lòng thung lũng đá bazan.",
+    descEn: "One of the most majestic waterfalls in Gia Lai, cascading from a height of 45m down to the basalt valley.",
+    address: "Xã Dun, Huyện Chư Sê, Gia Lai",
+    addressEn: "Dun Commune, Chu Se District, Gia Lai",
+    rating: 4.6,
+    x: 620,
+    y: 480,
+    routeTime: "50 phút"
+  },
+  {
+    id: "vuon-che",
+    name: "Vườn chè Biển Hồ",
+    nameEn: "Bien Ho Tea Hills",
+    img: "image/Ky_Co.jpg",
+    tags: ["check-in", "nature", "coffee"],
+    green: true,
+    priceVal: 0,
+    price: "Miễn phí",
+    hours: "Mở cửa cả ngày",
+    desc: "Đồi chè xanh mướt trải dài tít tắp kết hợp với hàng thông cổ thụ tạo nên một khung cảnh lãng mạn, thơ mộng.",
+    descEn: "Lush green tea hills stretching infinitely alongside century-old pine trees, creating a romantic landscape.",
+    address: "Huyện Chư Păh, Gia Lai",
+    addressEn: "Chu Pah District, Gia Lai",
+    rating: 4.7,
+    x: 430,
+    y: 150,
+    routeTime: "20 phút"
+  },
+  {
+    id: "chua-minh-thanh",
+    name: "Chùa Minh Thành",
+    nameEn: "Minh Thanh Pagoda",
+    img: "image/Chua_Minh_Thanh.jpg",
+    tags: ["culture", "check-in"],
+    green: false,
+    priceVal: 0,
+    price: "Miễn phí",
+    hours: "07:00 - 18:00",
+    desc: "Ngôi chùa nổi tiếng sở hữu kiến trúc giao thoa Nhật Bản và Trung Hoa độc đáo với bảo tháp Xá Lợi 9 tầng uy nghiêm.",
+    descEn: "A famous pagoda with unique Japanese and Chinese architectural influences, featuring a majestic 9-story stupa.",
+    address: "Đường Nguyễn Viết Xuân, TP. Pleiku, Gia Lai",
+    addressEn: "Nguyen Viet Xuan Street, Pleiku City, Gia Lai",
+    rating: 4.7,
+    x: 500,
+    y: 330,
+    routeTime: "8 phút"
+  },
+  {
+    id: "quang-truong-dai-doan-ket",
+    name: "Quảng trường Đại Đoàn Kết",
+    nameEn: "Dai Doan Ket Square",
+    img: "image/Eo_Gio.jpg",
+    tags: ["family", "culture", "check-in"],
+    green: true,
+    priceVal: 0,
+    price: "Miễn phí",
+    hours: "Mở cửa cả ngày",
+    desc: "Trái tim của Pleiku, nơi đặt tượng đài Bác Hồ với các dân tộc Tây Nguyên cùng dàn cồng chiêng lớn nhất Việt Nam.",
+    descEn: "The heart of Pleiku City, featuring the Uncle Ho monument with Central Highlands ethnic groups and a giant gong set.",
+    address: "Phường Tây Sơn, TP. Pleiku, Gia Lai",
+    addressEn: "Tay Son Ward, Pleiku City, Gia Lai",
+    rating: 4.6,
+    x: 470,
+    y: 300,
+    routeTime: "5 phút"
+  },
+  {
+    id: "hang-thong-tram-tuoi",
+    name: "Hàng thông trăm tuổi",
+    nameEn: "Hundred-Year Pine Road",
+    img: "image/Ghenh_Rang_Tien_Sa.jpg",
+    tags: ["check-in", "nature"],
+    green: true,
+    priceVal: 0,
+    price: "Miễn phí",
+    hours: "Mở cửa cả ngày",
+    desc: "Con đường rợp bóng hàng thông cổ thụ xanh mướt dẫn lối vào đồi chè Biển Hồ, được mệnh danh là con đường tình yêu Pleiku.",
+    descEn: "A beautiful road shaded by century-old pine trees leading to the tea hills, known as Pleiku's road of love.",
+    address: "Huyện Chư Păh, Gia Lai",
+    addressEn: "Chu Pah District, Gia Lai",
+    rating: 4.8,
+    x: 420,
+    y: 140,
+    routeTime: "18 phút"
+  },
+  {
+    id: "chua-buu-minh",
+    name: "Chùa Bửu Minh",
+    nameEn: "Buu Minh Pagoda",
+    img: "image/Chua_Minh_Thanh.jpg",
+    tags: ["culture", "check-in", "coffee"],
+    green: false,
+    priceVal: 0,
+    price: "Miễn phí",
+    hours: "06:00 - 18:00",
+    desc: "Ngôi chùa cổ kính nép mình giữa những đồi chè bát ngát, mang vẻ đẹp linh thiêng, thanh tịnh.",
+    descEn: "An ancient pagoda nestled amidst vast green tea hills, offering a peaceful and sacred atmosphere.",
+    address: "Xã Nghĩa Hưng, Huyện Chư Păh, Gia Lai",
+    addressEn: "Nghia Hung Commune, Chu Pah District, Gia Lai",
+    rating: 4.7,
+    x: 410,
+    y: 130,
+    routeTime: "22 phút"
+  }
 ];
 
+// default itinerary
+const SAMPLE_ITINERARY = [
+  { day: 1, items: ["Biển Hồ (Hồ T'Nưng)", "Phố đêm Pleiku"] },
+  { day: 2, items: ["Núi lửa Chư Đăng Ya", "Làng văn hóa Jrai (Làng Ốp)"] },
+  { day: 3, items: ["Thác Phú Cường", "Vườn chè Biển Hồ"] }
+];
 
-export default destinations;
+// Travel Badges Gamification System
+const TOUR_BADGES = [
+  {
+    id: "nature-lover",
+    icon: "🌿",
+    name: "Người Yêu Thiên Nhiên",
+    nameEn: "Nature Lover",
+    desc: "Lập lịch trình ghé thăm ít nhất một địa điểm thiên nhiên tại Gia Lai.",
+    descEn: "Create an itinerary visiting at least one natural spot in Gia Lai."
+  },
+  {
+    id: "culture-explorer",
+    icon: "🏛️",
+    name: "Nhà Khám Phá Văn Hóa",
+    nameEn: "Culture Explorer",
+    desc: "Lập lịch trình khám phá văn hóa Jrai hoặc các điểm tâm linh linh thiêng.",
+    descEn: "Explore the Jrai culture or visiting sacred spiritual sites."
+  },
+  {
+    id: "foodie",
+    icon: "🍲",
+    name: "Tín Đồ Ẩm Thực",
+    nameEn: "Gia Lai Foodie",
+    desc: "Ghé thăm khu phố ẩm thực Pleiku trong kế hoạch hành trình của bạn.",
+    descEn: "Visit the Pleiku night food street in your travel plans."
+  },
+  {
+    id: "trekker",
+    icon: "🥾",
+    name: "Kẻ Chinh Phục Thử Thách",
+    nameEn: "Highlands Trekker",
+    desc: "Lựa chọn các điểm trekking mạo hiểm như núi lửa Chư Đăng Ya hay Thác Phú Cường.",
+    descEn: "Select challenging trekking spots like Chư Đăng Ya or Phú Cường Waterfall."
+  },
+  {
+    id: "eco-traveler",
+    icon: "🍃",
+    name: "Du Khách Xanh",
+    nameEn: "Eco-friendly Traveler",
+    desc: "Kích hoạt chế độ Du Lịch Xanh (Eco Mode) để ưu tiên các địa điểm thân thiện với môi trường.",
+    descEn: "Enable Eco Mode to prioritize environmentally friendly destinations."
+  }
+];
