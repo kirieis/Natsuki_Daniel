@@ -286,7 +286,7 @@ const PLACES = [
     routeTime: "20 phút"
   }
 ]
-];
+  ;
 
 // default itinerary
 const SAMPLE_ITINERARY = [
