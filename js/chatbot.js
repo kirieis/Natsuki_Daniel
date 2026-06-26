@@ -469,15 +469,16 @@ Quy định đặc biệt:
     }
     
     /* Responsive details */
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
       #gl-chat-panel {
         width: calc(100vw - 32px);
-        height: 480px;
-        bottom: 74px;
-        right: -8px;
+        height: 60vh;
+        max-height: 500px;
+        bottom: 90px;
+        right: 16px;
       }
       #gl-chat-widget {
-        bottom: 16px;
+        bottom: 90px; /* Above the mobile nav */
         right: 16px;
       }
     }
