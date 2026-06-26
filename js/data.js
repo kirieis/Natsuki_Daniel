@@ -434,7 +434,22 @@ const destinations = [
             "trekking"
         ],
 
-        image: "image/final_destination/Phu_Cuong_Waterfall.jpg"
+        image: "image/final_destination/Phu_Cuong_Waterfall.jpg",
+
+        accommodation: {
+            name: "Moc Homestay",
+            type: "homestay",
+            address: "Thon Ly Chanh, Xa Nhon Ly, Quy Nhon, Binh Dinh",
+            priceRange: { min: 612000, max: 1200000 },
+            phone: "1900 252 209",
+            image: "image/location/Moc_Homestay.jpg",
+            highlights: [
+                "Koi fish pond at the entrance",
+                "Asian nature style with wood and bamboo",
+                "Room types: single, double, dorm, special, VIP",
+                "Convenient base for waterfall excursions"
+            ]
+        }
     },
 
 
@@ -492,6 +507,147 @@ const destinations = [
                 "360-degree sea view outdoor gala space",
                 "100-inch 4K LED screen for events",
                 "Acoustic music every evening"
+            ]
+        }
+    },
+
+
+    {
+        id: 10,
+        name: "Gia Lai Museum",
+        category: ["culture", "history"],
+
+        description:
+            "A comprehensive museum showcasing the rich cultural heritage and history of Gia Lai province, featuring artifacts from various ethnic minorities.",
+
+        rating: 4.5,
+        ticketPrice: 80000,
+
+        openingHours: "07:00 - 17:00",
+        estimatedDuration: "2 hours",
+
+        suitableFor: [
+            "family",
+            "culture lovers",
+            "history lovers"
+        ],
+
+        tags: [
+            "history",
+            "culture",
+            "museum",
+            "education"
+        ],
+
+        image: "image/final_destination/bao-tang-gia-lai.jpg",
+
+        accommodation: {
+            name: "Hoang Anh Gia Lai Hotel",
+            type: "hotel",
+            address: "Pleiku City Center, Gia Lai",
+            priceRange: { min: 450000, max: 850000 },
+            phone: "0943 333 333",
+            image: "image/location/Hoang_Anh_Gia_Lai_Hotel.jpg",
+            highlights: [
+                "Modern hotel with 117 rooms in city center",
+                "On-site restaurant serving local Central Highlands cuisine",
+                "Entertainment: karaoke, billiards",
+                "Walking distance to Gia Lai Museum"
+            ]
+        }
+    },
+
+
+    {
+        id: 11,
+        name: "Tea Hill at Bien Ho",
+        category: ["nature", "check-in", "agriculture"],
+
+        description:
+            "A picturesque tea plantation on a hillside overlooking Bien Ho lake, offering scenic views and insight into Gia Lai's tea cultivation heritage.",
+
+        rating: 4.7,
+        ticketPrice: 120000,
+
+        openingHours: "06:00 - 18:00",
+        estimatedDuration: "2 hours",
+
+        suitableFor: [
+            "family",
+            "photography",
+            "nature lovers"
+        ],
+
+        tags: [
+            "tea plantation",
+            "agriculture",
+            "scenic view",
+            "check-in"
+        ],
+
+        image: "image/final_destination/doi-che-o-bien-ho.jpg",
+
+        accommodation: {
+            name: "Xom House Bien Ho",
+            type: "homestay",
+            address: "Hem 34 Tan Da, Thon 4, Xa Bien Ho, Pleiku, Gia Lai",
+            priceRange: { min: 560000, max: 1000000 },
+            phone: "1900 252 209",
+            image: "image/location/Xom_House_Bien_Ho.jpg",
+            highlights: [
+                "Lakeside location right next to Bien Ho",
+                "SUP kayaking and cycling activities available",
+                "Warm orange-brown-beige design aesthetic",
+                "Direct access to tea hill trekking trails"
+            ]
+        }
+    },
+
+
+    {
+        id: 12,
+        name: "Pleiku Prison Historical Site",
+        category: ["history", "culture"],
+
+        description:
+            "A historical landmark preserving the memories of Pleiku Prison, offering insight into Vietnam's wartime history and cultural heritage.",
+
+        rating: 4.3,
+        ticketPrice: 75000,
+
+        openingHours: "07:00 - 17:00",
+        estimatedDuration: "1.5 hours",
+
+        suitableFor: [
+            "family",
+            "history lovers",
+            "culture lovers"
+        ],
+
+        tags: [
+            "history",
+            "culture",
+            "heritage",
+            "education"
+        ],
+
+        image: "image/final_destination/nha-lao-pleiku.jpg",
+
+        accommodation: {
+            name: "SORA Homestay",
+            type: "homestay",
+            address: "206/18 Phu Dong, P. Hoa Lu, Pleiku, Gia Lai",
+            priceRange: { min: 320000, max: 480000 },
+            phone: "0828 211 222",
+            checkIn: "14:00",
+            checkOut: "12:00",
+            image: "image/location/SORA_Homestay.jpg",
+            highlights: [
+                "Garden-style with lots of greenery",
+                "1–1.6 km from Pleiku city center and historical sites",
+                "24/7 front desk service",
+                "Free parking",
+                "Some rooms have balcony overlooking garden"
             ]
         }
     }
