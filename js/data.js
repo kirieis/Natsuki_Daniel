@@ -285,6 +285,7 @@ const PLACES = [
     y: 190,
     routeTime: "20 phút"
   }
+]
 ];
 
 // default itinerary
