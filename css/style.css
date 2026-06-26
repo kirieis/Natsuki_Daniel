@@ -2054,7 +2054,7 @@ body.dark-mode .control-circle-btn:hover {
 /* Hero Section */
 .home-hero {
   padding: 100px 80px 120px;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.35) 100%), url('../image/CauThang.jpg') center/cover no-repeat;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.35) 100%), url('../image/pleiades.jpg') center/cover no-repeat;
   text-align: center;
   display: flex;
   justify-content: center;
