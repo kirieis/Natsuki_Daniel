@@ -1,501 +1,340 @@
-const destinations = [
-    {
-        id: 1,
-        name: "Bien Ho (To Nung)",
-        category: ["nature", "check-in"],
-
-        description:
-            "A natural freshwater lake located inside an ancient volcanic crater, famous for its peaceful scenery and the poetic beauty of Pleiku.",
-
-        rating: 4.8,
-        ticketPrice: 0,
-
-        openingHours: "06:00 - 18:00",
-        estimatedDuration: "2 - 3 hours",
-
-        suitableFor: [
-            "family",
-            "couple",
-            "photography"
-        ],
-
-        tags: [
-            "nature",
-            "sunrise",
-            "relax",
-            "check-in"
-        ],
-
-        image: "image/final_destination/Bien_Ho_(To Nung).jpg",
-
-        accommodation: {
-            name: "Xom House Bien Ho",
-            type: "homestay",
-            address: "Hem 34 Tan Da, Thon 4, Xa Bien Ho, Pleiku, Gia Lai",
-            priceRange: { min: 560000, max: 1000000 },
-            phone: "1900 252 209",
-            image: "image/location/Xom_House_Bien_Ho.jpg",
-            highlights: [
-                "Lakeside location right next to Bien Ho",
-                "SUP kayaking and cycling activities available",
-                "Warm orange-brown-beige design aesthetic",
-                "Managed by Xom Studio architecture firm"
-            ]
-        },
-
-        dining: {
-            name: "To Nung Restaurant",
-            type: "restaurant",
-            address: "220 Ton Duc Thang, Bien Ho, Pleiku, Gia Lai",
-            openingHours: "08:00 - 22:00",
-            phone: "0906 519 099",
-            image: "image/location/To_Nung_Restaurant.jpg",
-            highlights: [
-                "Traditional lunch with Xoan dance performance",
-                "Campfire experience",
-                "Local Central Highlands cuisine"
-            ]
-        },
-
-        cafe: {
-            name: "Litaliti Ca Phe",
-            type: "cafe",
-            address: "P. Yen The, Thanh pho Pleiku, Gia Lai",
-            fanpage: "https://www.facebook.com/litaliticaphe/",
-            image: "image/location/Litaliti_Coffee.jpg",
-            highlights: [
-                "Sunset viewpoint cafe",
-                "Classic vintage decor style",
-                "Panoramic city view",
-                "Natural lighting and flower garden"
-            ]
-        }
-    },
-
-
-    {
-        id: 2,
-        name: "Chua Minh Thanh",
-        category: ["culture", "architecture"],
-
-        description:
-            "A unique Buddhist temple featuring impressive Asian-inspired architecture and a peaceful spiritual atmosphere in Pleiku.",
-
-        rating: 4.7,
-        ticketPrice: 0,
-
-        openingHours: "06:00 - 18:00",
-        estimatedDuration: "1 - 2 hours",
-
-        suitableFor: [
-            "family",
-            "culture lovers",
-            "photography"
-        ],
-
-        tags: [
-            "culture",
-            "architecture",
-            "spiritual"
-        ],
-
-        image: "image/final_destination/Chua_Minh_Thanh.jpg",
-
-        accommodation: {
-            name: "SORA Homestay",
-            type: "homestay",
-            address: "206/18 Phu Dong, P. Hoa Lu, Pleiku, Gia Lai",
-            priceRange: { min: 320000, max: 480000 },
-            phone: "0828 211 222",
-            checkIn: "14:00",
-            checkOut: "12:00",
-            image: "image/location/SORA_Homestay.jpg",
-            highlights: [
-                "Garden-style with lots of greenery",
-                "1–1.6 km from Pleiku city center",
-                "24/7 front desk service",
-                "Free parking",
-                "Some rooms have balcony overlooking garden"
-            ]
-        },
-
-        dining: {
-            name: "Anh Quang Vegan",
-            type: "vegetarian restaurant",
-            address: "30 Nguyen Viet Xuan, P. Hoi Phu, Pleiku (near Chua Minh Thanh)",
-            priceRange: "budget-friendly",
-            image: "image/location/Anh_Quang-Vegan.jpg",
-            highlights: [
-                "Popular vegetarian restaurant near the temple",
-                "Affordable local vegetarian dishes",
-                "Frequented by visitors after temple visit"
-            ]
-        },
-
-        cafe: {
-            name: "Pagoda Tea & Coffee",
-            type: "cafe",
-            address: "277A Su Van Hanh, P. Hoi Phu, TP. Pleiku",
-            image: "image/location/Pagoda_Tea_&_Coffee.jpg",
-            highlights: [
-                "Direct view of Chua Minh Thanh",
-                "Perfect spot on full moon evenings when temple is lit up",
-                "Great for photography and relaxing"
-            ]
-        }
-    },
-
-
-    {
-        id: 3,
-        name: "Chu Dang Ya Volcano",
-        category: ["nature", "trekking"],
-
-        description:
-            "A famous volcanic mountain known for its wild beauty, golden wildflowers, and breathtaking landscapes of the Central Highlands.",
-
-        rating: 4.8,
-        ticketPrice: 0,
-
-        openingHours: "Open all day",
-        estimatedDuration: "3 - 4 hours",
-
-        suitableFor: [
-            "adventure",
-            "young travelers",
-            "photography"
-        ],
-
-        tags: [
-            "trekking",
-            "nature",
-            "camping",
-            "photography"
-        ],
-
-        image: "image/final_destination/Chu_Dang_Ya_Volcano.jpg",
-
-        accommodation: {
-            name: "Hoang Anh Gia Lai Hotel",
-            type: "hotel",
-            address: "Pleiku City Center, Gia Lai",
-            priceRange: { min: 450000, max: 850000 },
-            phone: "0943 333 333",
-            image: "image/location/Hoang_Anh_Gia_Lai_Hotel.jpg",
-            highlights: [
-                "Modern hotel with 117 rooms in city center",
-                "On-site restaurant serving local Central Highlands cuisine",
-                "Entertainment: karaoke, billiards",
-                "Convenient base for Chu Dang Ya day trips"
-            ]
-        }
-    },
-
-
-    {
-        id: 4,
-        name: "Ky Co",
-        category: ["nature", "beach", "check-in"],
-
-        description:
-            "A famous beach destination with crystal-clear water, beautiful sandy beaches, and various outdoor activities for visitors.",
-
-        rating: 4.6,
-        ticketPrice: 100000,
-
-        openingHours: "07:00 - 18:00",
-        estimatedDuration: "4 - 5 hours",
-
-        suitableFor: [
-            "family",
-            "couple",
-            "friends"
-        ],
-
-        tags: [
-            "beach",
-            "swimming",
-            "photography"
-        ],
-
-        image: "image/final_destination/Ky_Co.jpg",
-
-        accommodation: {
-            name: "Moc Homestay",
-            type: "homestay",
-            address: "Thon Ly Chanh, Xa Nhon Ly, Quy Nhon, Binh Dinh",
-            priceRange: { min: 612000, max: 1200000 },
-            phone: "1900 252 209",
-            image: "image/location/Moc_Homestay.jpg",
-            highlights: [
-                "Koi fish pond at the entrance",
-                "Asian nature style with wood and bamboo",
-                "Room types: single, double, dorm, special, VIP",
-                "20 km from Quy Nhon city center, near Phu Cat Airport"
-            ]
-        },
-
-        dining: {
-            name: "Coco Jambo Restaurant",
-            type: "seafood restaurant",
-            address: "Thon Ly Hung, Xa Nhon Ly, TP. Quy Nhon, Binh Dinh",
-            image: "image/location/Coco_Jambo_Restaurant.jpg",
-            highlights: [
-                "Beachfront location at Bai Bac",
-                "Capacity for 500 guests",
-                "10 fresh seafood dishes",
-                "Coral viewing raft available",
-                "Free SUP and flycam photography service",
-                "BBQ setup service available"
-            ]
-        }
-    },
-
-
-    {
-        id: 5,
-        name: "Eo Gio",
-        category: ["check-in", "nature"],
-
-        description:
-            "A stunning coastal viewpoint famous for sunrise watching, surrounded by unique rocky mountains and the beautiful sea.",
-
-        rating: 4.7,
-        ticketPrice: 25000,
-
-        openingHours: "06:00 - 18:00",
-        estimatedDuration: "1 - 2 hours",
-
-        suitableFor: [
-            "couple",
-            "photography"
-        ],
-
-        tags: [
-            "sunrise",
-            "sea",
-            "check-in"
-        ],
-
-        image: "image/final_destination/Eo_Gio.jpg",
-
-        accommodation: {
-            name: "Eo Gio Co Homestay",
-            type: "homestay",
-            address: "Thon Ly Luong, Xa Nhon Ly, Quy Nhon, Binh Dinh",
-            priceRange: { min: 550000, max: 975000 },
-            phone: "1900 252 209",
-            image: "image/location/Eo_Gio_Co_Homestay.jpg",
-            highlights: [
-                "Only 150m from Eo Gio viewpoint",
-                "500m from Trung Luong Beach",
-                "Unique bungalow design with sunflower windows",
-                "Yellow and bamboo decor",
-                "Cycling, walking tours, water sports available",
-                "Free extra bed for children 0–5 years old"
-            ]
-        },
-
-        cafe: {
-            name: "Con Duong Da Xanh Cafe",
-            type: "cafe",
-            address: "About 30m from Eo Gio entrance, Nhon Ly, Quy Nhon",
-            image: "image/location/Con_Duong_Da_Xanh_Cafe.jpg",
-            highlights: [
-                "Santorini-inspired blue stone path design",
-                "Indoor air-conditioned and outdoor garden seating",
-                "Best sunrise viewpoint in Vietnam",
-                "Costume rental for photos available"
-            ]
-        }
-    },
-
-
-    {
-        id: 6,
-        name: "Thap Doi",
-        category: ["culture", "history"],
-
-        description:
-            "An ancient Cham tower complex located in the city center, featuring unique architecture and historical cultural values.",
-
-        rating: 4.4,
-        ticketPrice: 20000,
-
-        openingHours: "07:00 - 17:00",
-        estimatedDuration: "1 hour",
-
-        suitableFor: [
-            "culture lovers",
-            "family"
-        ],
-
-        tags: [
-            "history",
-            "architecture",
-            "culture"
-        ],
-
-        image: "image/final_destination/Thap_Doi.jpg",
-
-        accommodation: {
-            name: "Melody Homestay Quy Nhon",
-            type: "homestay",
-            address: "169 Dong Da, Phuong Thi Nai, TP. Quy Nhon, Binh Dinh",
-            priceRange: { min: 300000, max: 390000 },
-            image: "image/location/Melody_Homestay_Quy_Nhon.jpg",
-            highlights: [
-                "1.8 km from Thap Doi",
-                "1.6 km from Quy Nhon city center",
-                "Budget-friendly for independent travelers",
-                "Private, quiet space"
-            ]
-        },
-
-        dining: {
-            name: "San Vuon 4Q Restaurant",
-            type: "restaurant",
-            address: "107 Phan Dinh Phung, Quy Nhon",
-            image: "image/location/San_Vuon_4Q_Restaurant.jpg",
-            highlights: [
-                "Garden restaurant atmosphere",
-                "Vietnamese and European fusion cuisine",
-                "Suitable for family and group gatherings",
-                "Private and airy setting"
-            ]
-        }
-    },
-
-
-    {
-        id: 7,
-        name: "Quang Trung Museum",
-        category: ["culture", "history"],
-
-        description:
-            "A museum preserving important historical memories and stories about the legendary Vietnamese hero Quang Trung.",
-
-        rating: 4.5,
-        ticketPrice: 50000,
-
-        openingHours: "07:00 - 17:00",
-        estimatedDuration: "2 hours",
-
-        suitableFor: [
-            "family",
-            "history lovers"
-        ],
-
-        tags: [
-            "history",
-            "culture",
-            "education"
-        ],
-
-        image: "image/final_destination/Quang_Trung_Museum.jpg",
-
-        accommodation: {
-            name: "Homestay MyTran - HauLoan",
-            type: "homestay",
-            address: "Khu biet thu Dai Phu Gia, TP. Quy Nhon, Binh Dinh",
-            priceRange: { min: 334000, max: 550000 },
-            image: "image/location/Homestay_MyTran-HauLoan.jpg",
-            highlights: [
-                "Quiet villa complex with good security",
-                "Budget-friendly with full amenities",
-                "Suitable for backpackers and families"
-            ]
-        }
-    },
-
-
-    {
-        id: 8,
-        name: "Phu Cuong Waterfall",
-        category: ["nature", "trekking"],
-
-        description:
-            "A spectacular waterfall located on a basalt foundation, offering an exciting nature exploration experience.",
-
-        rating: 4.6,
-        ticketPrice: 30000,
-
-        openingHours: "07:00 - 17:30",
-        estimatedDuration: "2 - 3 hours",
-
-        suitableFor: [
-            "adventure",
-            "young travelers"
-        ],
-
-        tags: [
-            "waterfall",
-            "nature",
-            "trekking"
-        ],
-
-        image: "image/final_destination/Phu_Cuong_Waterfall.jpg"
-    },
-
-
-    {
-        id: 9,
-        name: "Ghenh Rang Tien Sa",
-        category: ["check-in", "culture"],
-
-        description:
-            "A famous tourist attraction featuring Hoang Hau Beach and the tomb of poet Han Mac Tu, combining natural beauty and cultural heritage.",
-
-        rating: 4.5,
-        ticketPrice: 0,
-
-        openingHours: "07:00 - 18:00",
-        estimatedDuration: "2 hours",
-
-        suitableFor: [
-            "family",
-            "couple",
-            "photography"
-        ],
-
-        tags: [
-            "sea",
-            "culture",
-            "check-in"
-        ],
-
-        image: "image/final_destination/Ghenh_Rang_Tien_Sa.jpg",
-
-        accommodation: {
-            name: "Ghenh Rang Resort",
-            type: "resort",
-            address: "To 3, Phuong Ghenh Rang, TP. Quy Nhon, Binh Dinh",
-            priceRange: { min: 650000, max: 1200000 },
-            image: "image/location/Ghenh_Rang_Resort.jpg",
-            highlights: [
-                "Opened in 2018, directly by the sea and mountain",
-                "Lush green grounds with coconut palms and flowers",
-                "Popular with international visitors",
-                "Pristine Central Vietnamese coastal scenery"
-            ]
-        },
-
-        dining: {
-            name: "Four Seasons Restaurant",
-            type: "restaurant",
-            address: "Quy Nhon beachfront, Binh Dinh",
-            image: "image/location/Four_Seasons_Restaurant.jpg",
-            highlights: [
-                "Breakfast cafe and morning set menus",
-                "Birthday and wedding banquet venue",
-                "Group meals starting from 150,000 VND/person",
-                "360-degree sea view outdoor gala space",
-                "100-inch 4K LED screen for events",
-                "Acoustic music every evening"
-            ]
-        }
-    }
+// Global Places database
+const PLACES = [
+  {
+    id: "bien-ho",
+    name: "Biển Hồ (Hồ T'Nưng)",
+    nameEn: "Bien Ho Lake (To Nung)",
+    img: "image/Bien_Ho_(To Nung).jpg",
+    tags: ["nature", "check-in", "family", "resort"],
+    green: true,
+    priceVal: 10000,
+    price: "10.000đ",
+    hours: "06:00 - 18:00",
+    desc: "Được mệnh danh là 'Đôi mắt Pleiku', hồ nước ngọt tự nhiên này nằm trên một miệng núi lửa đã tắt từ hàng triệu năm trước.",
+    descEn: "Known as the 'Eye of Pleiku', this natural freshwater lake is located in an extinct volcanic crater.",
+    address: "Xã Biển Hồ, TP. Pleiku, Gia Lai",
+    addressEn: "Bien Ho Commune, Pleiku City, Gia Lai",
+    rating: 4.8,
+    x: 450,
+    y: 180,
+    routeTime: "15 phút"
+  },
+  {
+    id: "chu-dang-ya",
+    name: "Núi lửa Chư Đăng Ya",
+    nameEn: "Chu Dang Ya Volcano",
+    img: "image/Chu_Dang_Ya_Volcano.jpg",
+    tags: ["nature", "trekking", "camping"],
+    green: true,
+    priceVal: 0,
+    price: "Miễn phí",
+    hours: "Mở cửa cả ngày",
+    desc: "Ngọn núi lửa đã tắt độc đáo với sắc hoa dã quỳ vàng rực rỡ phủ khắp triền đồi vào khoảng tháng 11 hàng năm.",
+    descEn: "An extinct volcano famous for its blooming wild yellow sunflowers on hillsides in November.",
+    address: "Xã Chư Đăng Ya, Huyện Chư Păh, Gia Lai",
+    addressEn: "Chu Dang Ya Commune, Chu Pah District, Gia Lai",
+    rating: 4.8,
+    x: 380,
+    y: 100,
+    routeTime: "35 phút"
+  },
+  {
+    id: "phong-nguyen",
+    name: "Phố đêm Pleiku",
+    nameEn: "Pleiku Night Street",
+    img: "image/Thap_Doi.jpg",
+    tags: ["food", "culture"],
+    green: false,
+    priceVal: 0,
+    price: "Miễn phí",
+    hours: "18:00 - 23:00",
+    desc: "Khu phố ẩm thực sầm uất về đêm của thành phố Pleiku, nơi du khách có thể thưởng thức phở khô, cơm lam gà nướng và cà phê phố núi.",
+    descEn: "A bustling night culinary street in Pleiku City, where visitors can enjoy dry Pho, grilled chicken with bamboo rice, and mountain coffee.",
+    address: "Đường Nguyễn Thiện Thuật, TP. Pleiku, Gia Lai",
+    addressEn: "Nguyen Thien Thuat Street, Pleiku City, Gia Lai",
+    rating: 4.5,
+    x: 480,
+    y: 350,
+    routeTime: "10 phút"
+  },
+  {
+    id: "lang-jrai",
+    name: "Làng văn hóa Jrai (Làng Ốp)",
+    nameEn: "Jrai Cultural Village (Op Village)",
+    img: "image/Quang_Trung_Museum.jpg",
+    tags: ["culture", "family"],
+    green: true,
+    priceVal: 50000,
+    price: "50.000đ",
+    hours: "08:00 - 17:00",
+    desc: "Tìm hiểu bản sắc văn hóa Jrai qua những ngôi nhà rông truyền thống, tiếng cồng chiêng ngân vang và điệu múa xoang đặc sắc.",
+    descEn: "Discover the unique Jrai ethnic culture through traditional communal houses, gongs, and folk dances.",
+    address: "Phường Hoa Lư, TP. Pleiku, Gia Lai",
+    addressEn: "Hoa Lư Ward, Pleiku City, Gia Lai",
+    rating: 4.6,
+    x: 520,
+    y: 310,
+    routeTime: "12 phút"
+  },
+  {
+    id: "thac-phu-cuong",
+    name: "Thác Phú Cường",
+    nameEn: "Phu Cuong Waterfall",
+    img: "image/Phu_Cuong_Waterfall.jpg",
+    tags: ["nature", "trekking", "camping"],
+    green: true,
+    priceVal: 30000,
+    price: "30.000đ",
+    hours: "07:00 - 17:00",
+    desc: "Một trong những thác nước hùng vĩ nhất Gia Lai, dòng nước đổ thẳng từ độ cao 45m xuống lòng thung lũng đá bazan.",
+    descEn: "One of the most majestic waterfalls in Gia Lai, cascading from a height of 45m down to the basalt valley.",
+    address: "Xã Dun, Huyện Chư Sê, Gia Lai",
+    addressEn: "Dun Commune, Chu Se District, Gia Lai",
+    rating: 4.6,
+    x: 620,
+    y: 480,
+    routeTime: "50 phút"
+  },
+  {
+    id: "vuon-che",
+    name: "Vườn chè Biển Hồ",
+    nameEn: "Bien Ho Tea Hills",
+    img: "image/Ky_Co.jpg",
+    tags: ["check-in", "nature", "coffee"],
+    green: true,
+    priceVal: 0,
+    price: "Miễn phí",
+    hours: "Mở cửa cả ngày",
+    desc: "Đồi chè xanh mướt trải dài tít tắp kết hợp với hàng thông cổ thụ tạo nên một khung cảnh lãng mạn, thơ mộng.",
+    descEn: "Lush green tea hills stretching infinitely alongside century-old pine trees, creating a romantic landscape.",
+    address: "Huyện Chư Păh, Gia Lai",
+    addressEn: "Chu Pah District, Gia Lai",
+    rating: 4.7,
+    x: 430,
+    y: 150,
+    routeTime: "20 phút"
+  },
+  {
+    id: "chua-minh-thanh",
+    name: "Chùa Minh Thành",
+    nameEn: "Minh Thanh Pagoda",
+    img: "image/Chua_Minh_Thanh.jpg",
+    tags: ["culture", "check-in"],
+    green: false,
+    priceVal: 0,
+    price: "Miễn phí",
+    hours: "07:00 - 18:00",
+    desc: "Ngôi chùa nổi tiếng sở hữu kiến trúc giao thoa Nhật Bản và Trung Hoa độc đáo với bảo tháp Xá Lợi 9 tầng uy nghiêm.",
+    descEn: "A famous pagoda with unique Japanese and Chinese architectural influences, featuring a majestic 9-story stupa.",
+    address: "Đường Nguyễn Viết Xuân, TP. Pleiku, Gia Lai",
+    addressEn: "Nguyen Viet Xuan Street, Pleiku City, Gia Lai",
+    rating: 4.7,
+    x: 500,
+    y: 330,
+    routeTime: "8 phút"
+  },
+  {
+    id: "quang-truong-dai-doan-ket",
+    name: "Quảng trường Đại Đoàn Kết",
+    nameEn: "Dai Doan Ket Square",
+    img: "image/Eo_Gio.jpg",
+    tags: ["family", "culture", "check-in"],
+    green: true,
+    priceVal: 0,
+    price: "Miễn phí",
+    hours: "Mở cửa cả ngày",
+    desc: "Trái tim của Pleiku, nơi đặt tượng đài Bác Hồ với các dân tộc Tây Nguyên cùng dàn cồng chiêng lớn nhất Việt Nam.",
+    descEn: "The heart of Pleiku City, featuring the Uncle Ho monument with Central Highlands ethnic groups and a giant gong set.",
+    address: "Phường Tây Sơn, TP. Pleiku, Gia Lai",
+    addressEn: "Tay Son Ward, Pleiku City, Gia Lai",
+    rating: 4.6,
+    x: 470,
+    y: 300,
+    routeTime: "5 phút"
+  },
+  {
+    id: "hang-thong-tram-tuoi",
+    name: "Hàng thông trăm tuổi",
+    nameEn: "Hundred-Year Pine Road",
+    img: "image/Ghenh_Rang_Tien_Sa.jpg",
+    tags: ["check-in", "nature"],
+    green: true,
+    priceVal: 0,
+    price: "Miễn phí",
+    hours: "Mở cửa cả ngày",
+    desc: "Con đường rợp bóng hàng thông cổ thụ xanh mướt dẫn lối vào đồi chè Biển Hồ, được mệnh danh là con đường tình yêu Pleiku.",
+    descEn: "A beautiful road shaded by century-old pine trees leading to the tea hills, known as Pleiku's road of love.",
+    address: "Huyện Chư Păh, Gia Lai",
+    addressEn: "Chu Pah District, Gia Lai",
+    rating: 4.8,
+    x: 420,
+    y: 140,
+    routeTime: "18 phút"
+  },
+  {
+    id: "chua-buu-minh",
+    name: "Chùa Bửu Minh",
+    nameEn: "Buu Minh Pagoda",
+    img: "image/Chua_Minh_Thanh.jpg",
+    tags: ["culture", "check-in", "coffee"],
+    green: false,
+    priceVal: 0,
+    price: "Miễn phí",
+    hours: "06:00 - 18:00",
+    desc: "Ngôi chùa cổ kính nép mình giữa những đồi chè bát ngát, mang vẻ đẹp linh thiêng, thanh tịnh.",
+    descEn: "An ancient pagoda nestled amidst vast green tea hills, offering a peaceful and sacred atmosphere.",
+    address: "Xã Nghĩa Hưng, Huyện Chư Păh, Gia Lai",
+    addressEn: "Nghia Hung Commune, Chu Pah District, Gia Lai",
+    rating: 4.7,
+    x: 410,
+    y: 130,
+    routeTime: "22 phút"
+  },
+  {
+    id: "cozy-homestay",
+    name: "Pleiku Cozy Homestay",
+    nameEn: "Pleiku Cozy Homestay",
+    img: "image/rest/cozy-homestay.png",
+    tags: ["resort", "family", "check-in"],
+    green: true,
+    priceVal: 350000,
+    price: "350.000đ/đêm",
+    hours: "Mở cửa cả ngày",
+    desc: "Homestay ấm cúng với nội thất gỗ tinh tế, tọa lạc tại vị trí yên tĩnh giữa lòng Pleiku.",
+    descEn: "Cozy homestay with sophisticated wooden interior, located in a quiet location in the heart of Pleiku.",
+    address: "Đường Lê Duẩn, TP. Pleiku, Gia Lai",
+    addressEn: "Le Duan Street, Pleiku City, Gia Lai",
+    rating: 4.8,
+    x: 460,
+    y: 320,
+    routeTime: "12 phút"
+  },
+  {
+    id: "garden-homestay",
+    name: "Hani Garden House",
+    nameEn: "Hani Garden House",
+    img: "image/rest/garden-homestay.png",
+    tags: ["resort", "nature", "family"],
+    green: true,
+    priceVal: 400000,
+    price: "400.000đ/đêm",
+    hours: "Mở cửa cả ngày",
+    desc: "Homestay sân vườn ngập tràn cây xanh, mang đến không gian thư giãn tuyệt đối cho du khách.",
+    descEn: "Garden homestay filled with green trees, bringing absolute relaxation space to visitors.",
+    address: "Đường Phù Đổng, TP. Pleiku, Gia Lai",
+    addressEn: "Phu Dong Street, Pleiku City, Gia Lai",
+    rating: 4.7,
+    x: 440,
+    y: 280,
+    routeTime: "15 phút"
+  },
+  {
+    id: "flower-homestay",
+    name: "Nhà Tôi Flower Cottage",
+    nameEn: "Nha Toi Flower Cottage",
+    img: "image/rest/flower-homestay.jpg",
+    tags: ["resort", "check-in", "family"],
+    green: true,
+    priceVal: 450000,
+    price: "450.000đ/đêm",
+    hours: "Mở cửa cả ngày",
+    desc: "Ngôi nhà bằng đá ấm áp được bao phủ bởi những giàn hoa giấy rực rỡ sắc hồng tuyệt đẹp về đêm.",
+    descEn: "A warm stone cottage covered with brilliant pink bougainvillea flower trellises, beautiful at night.",
+    address: "Đường Hoàng Quốc Việt, TP. Pleiku, Gia Lai",
+    addressEn: "Hoang Quoc Viet Street, Pleiku City, Gia Lai",
+    rating: 4.9,
+    x: 490,
+    y: 310,
+    routeTime: "10 phút"
+  },
+  {
+    id: "gong-homestay",
+    name: "Tây Nguyên Gong Homestay",
+    nameEn: "Central Highlands Gong Homestay",
+    img: "image/rest/gong-homestay.jpg",
+    tags: ["resort", "culture", "family"],
+    green: true,
+    priceVal: 300000,
+    price: "300.000đ/đêm",
+    hours: "Mở cửa cả ngày",
+    desc: "Homestay nhà sàn gỗ truyền thống treo chiêng cổ, mang đậm nét đặc trưng văn hóa Tây Nguyên.",
+    descEn: "Traditional wooden stilt house homestay hanging ancient gongs, deeply showing the cultural features of Central Highlands.",
+    address: "Xã Ia Kênh, TP. Pleiku, Gia Lai",
+    addressEn: "Ia Kenh Commune, Pleiku City, Gia Lai",
+    rating: 4.6,
+    x: 510,
+    y: 360,
+    routeTime: "25 phút"
+  },
+  {
+    id: "eco-resort",
+    name: "Tiên Sơn Eco Resort",
+    nameEn: "Tien Son Eco Resort",
+    img: "image/rest/eco-resort.jpg",
+    tags: ["resort", "nature", "check-in"],
+    green: true,
+    priceVal: 1200000,
+    price: "1.200.000đ/đêm",
+    hours: "Mở cửa cả ngày",
+    desc: "Khu resort sinh thái cao cấp sở hữu các bungalow hình tam giác độc đáo bên cạnh hồ bơi trong xanh.",
+    descEn: "Premium eco-resort featuring unique triangular bungalows next to a crystal clear swimming pool.",
+    address: "Xã Tân Sơn, TP. Pleiku, Gia Lai",
+    addressEn: "Tan Son Commune, Pleiku City, Gia Lai",
+    rating: 4.9,
+    x: 400,
+    y: 190,
+    routeTime: "20 phút"
+  }
+]
 ];
 
+// default itinerary
+const SAMPLE_ITINERARY = [
+  { day: 1, items: ["Biển Hồ (Hồ T'Nưng)", "Phố đêm Pleiku"] },
+  { day: 2, items: ["Núi lửa Chư Đăng Ya", "Làng văn hóa Jrai (Làng Ốp)"] },
+  { day: 3, items: ["Thác Phú Cường", "Vườn chè Biển Hồ"] }
+];
 
-export default destinations;
+// Travel Badges Gamification System
+const TOUR_BADGES = [
+  {
+    id: "nature-lover",
+    icon: "🌿",
+    name: "Người Yêu Thiên Nhiên",
+    nameEn: "Nature Lover",
+    desc: "Lập lịch trình ghé thăm ít nhất một địa điểm thiên nhiên tại Gia Lai.",
+    descEn: "Create an itinerary visiting at least one natural spot in Gia Lai."
+  },
+  {
+    id: "culture-explorer",
+    icon: "🏛️",
+    name: "Nhà Khám Phá Văn Hóa",
+    nameEn: "Culture Explorer",
+    desc: "Lập lịch trình khám phá văn hóa Jrai hoặc các điểm tâm linh linh thiêng.",
+    descEn: "Explore the Jrai culture or visiting sacred spiritual sites."
+  },
+  {
+    id: "foodie",
+    icon: "🍲",
+    name: "Tín Đồ Ẩm Thực",
+    nameEn: "Gia Lai Foodie",
+    desc: "Ghé thăm khu phố ẩm thực Pleiku trong kế hoạch hành trình của bạn.",
+    descEn: "Visit the Pleiku night food street in your travel plans."
+  },
+  {
+    id: "trekker",
+    icon: "🥾",
+    name: "Kẻ Chinh Phục Thử Thách",
+    nameEn: "Highlands Trekker",
+    desc: "Lựa chọn các điểm trekking mạo hiểm như núi lửa Chư Đăng Ya hay Thác Phú Cường.",
+    descEn: "Select challenging trekking spots like Chư Đăng Ya or Phú Cường Waterfall."
+  },
+  {
+    id: "eco-traveler",
+    icon: "🍃",
+    name: "Du Khách Xanh",
+    nameEn: "Eco-friendly Traveler",
+    desc: "Kích hoạt chế độ Du Lịch Xanh (Eco Mode) để ưu tiên các địa điểm thân thiện với môi trường.",
+    descEn: "Enable Eco Mode to prioritize environmentally friendly destinations."
+  }
+];

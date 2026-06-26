@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách địa điểm</title>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    
+    <style>
+        /* CSS Scoped cho Module Places */
+        :root {
+            --p-module-primary: #3b82f6;
+            --p-module-primary-hover: #2563eb;
+            --p-module-bg: #f8fafc;
+            --p-module-card-bg: #ffffff;
+            --p-module-text: #334155;
+            --p-module-text-light: #64748b;
+            --p-module-border: #e2e8f0;
+            --p-module-danger: #ef4444;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--p-module-bg);
+            margin: 0;
+            padding: 20px;
+            color: var(--p-module-text);
+        }
+
+        .p-module-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Filter Section */
+        .p-module-filters {
+            background: var(--p-module-card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .p-module-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .p-module-form-group label {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .p-module-input, .p-module-select {
+            padding: 10px 12px;
+            border: 1px solid var(--p-module-border);
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .p-module-input:focus, .p-module-select:focus {
+            border-color: var(--p-module-primary);
+        }
+
+        .p-module-checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+            margin-top: 24px;
+        }
+
+        /* Grid & Cards */
+        .p-module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .p-module-card {
+            background: var(--p-module-card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .p-module-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .p-module-card-img-wrapper {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .p-module-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .p-module-card:hover .p-module-card-img {
+            transform: scale(1.05);
+        }
+
+        .p-module-favorite-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+
+        .p-module-favorite-btn.active {
+            color: var(--p-module-danger);
+        }
+
+        .p-module-favorite-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .p-module-card-content {
+            padding: 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .p-module-card-title {
+            margin: 0 0 8px 0;
+            font-size: 1.25rem;
+            color: var(--p-module-text);
+        }
+
+        .p-module-card-region {
+            font-size: 0.875rem;
+            color: var(--p-module-text-light);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .p-module-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .p-module-tag {
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .p-module-card-footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--p-module-border);
+            padding-top: 12px;
+        }
+
+        .p-module-price {
+            font-weight: bold;
+            color: var(--p-module-primary);
+        }
+
+        .p-module-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #f59e0b;
+        }
+
+        .p-module-empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            background: var(--p-module-card-bg);
+            border-radius: 12px;
+            color: var(--p-module-text-light);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="p-module-container" x-data="placesApp()">
+        
+        <!-- Filter Section -->
+        <div class="p-module-filters">
+            <!-- Tìm kiếm (debounce) -->
+            <div class="p-module-form-group">
+                <label for="p-search">Tìm kiếm địa điểm</label>
+                <input 
+                    id="p-search" 
+                    type="text" 
+                    class="p-module-input" 
+                    placeholder="Nhập tên địa điểm..." 
+                    x-model.debounce.500ms="filters.searchQuery"
+                >
+            </div>
+
+            <!-- Lọc theo Vùng -->
+            <div class="p-module-form-group">
+                <label for="p-region">Vùng / Tỉnh thành</label>
+                <select id="p-region" class="p-module-select" x-model="filters.region">
+                    <option value="">Tất cả vùng</option>
+                    <template x-for="region in uniqueRegions" :key="region">
+                        <option :value="region" x-text="region"></option>
+                    </template>
+                </select>
+            </div>
+
+            <!-- Lọc theo Loại hình -->
+            <div class="p-module-form-group">
+                <label for="p-category">Loại hình</label>
+                <select id="p-category" class="p-module-select" x-model="filters.category">
+                    <option value="">Tất cả loại hình</option>
+                    <template x-for="cat in uniqueCategories" :key="cat">
+                        <option :value="cat" x-text="formatCategory(cat)"></option>
+                    </template>
+                </select>
+            </div>
+
+            <!-- Lọc theo Giá tối đa -->
+            <div class="p-module-form-group">
+                <label for="p-price">Giá vé tối đa (VNĐ)</label>
+                <input 
+                    id="p-price" 
+                    type="number" 
+                    class="p-module-input" 
+                    placeholder="VD: 50000" 
+                    x-model="filters.maxPrice"
+                >
+            </div>
+
+            <!-- Chỉ xem yêu thích -->
+            <label class="p-module-checkbox-group">
+                <input type="checkbox" x-model="filters.showFavoritesOnly">
+                Chỉ xem yêu thích (<span x-text="favorites.length"></span>)
+            </label>
+        </div>
+
+        <!-- Grid Cards -->
+        <div class="p-module-grid">
+            <!-- Empty State -->
+            <div class="p-module-empty-state" x-show="filteredPlaces.length === 0" x-cloak>
+                <svg style="width:48px;height:48px;margin:0 auto 16px;color:#cbd5e1;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <h3>Không tìm thấy địa điểm nào phù hợp</h3>
+                <p>Vui lòng thử lại với các điều kiện lọc khác.</p>
+            </div>
+
+            <!-- Cards -->
+            <template x-for="place in filteredPlaces" :key="place.id">
+                <div class="p-module-card" @click="viewDetails(place.id)">
+                    <div class="p-module-card-img-wrapper">
+                        <!-- Fix img path for relative logic in final project -->
+                        <img :src="place.image" :alt="place.name" class="p-module-card-img">
+                        <!-- Stop click propagation for the favorite button so it doesn't trigger card click -->
+                        <button 
+                            class="p-module-favorite-btn" 
+                            :class="{ 'active': favorites.includes(place.id) }"
+                            @click.stop="toggleFavorite(place.id)"
+                            title="Yêu thích"
+                        >
+                            ♥
+                        </button>
+                    </div>
+                    
+                    <div class="p-module-card-content">
+                        <h3 class="p-module-card-title" x-text="place.name"></h3>
+                        <div class="p-module-card-region">
+                            <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <span x-text="place.region"></span>
+                        </div>
+                        
+                        <div class="p-module-card-tags">
+                            <template x-for="cat in place.category.slice(0, 3)" :key="cat">
+                                <span class="p-module-tag" x-text="formatCategory(cat)"></span>
+                            </template>
+                        </div>
+                        
+                        <div class="p-module-card-footer">
+                            <div class="p-module-price" x-text="formatPrice(place.ticketPrice)"></div>
+                            <div class="p-module-rating">
+                                <span>★</span> <span x-text="place.rating"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+    </div>
+
+    <!-- Script Data & Alpine Logic -->
+    <script type="module">
+        import destinations from './js/data.js';
+
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('placesApp', () => ({
+                places: destinations,
+                favorites: [],
+                
+                filters: {
+                    searchQuery: '',
+                    region: '',
+                    category: '',
+                    maxPrice: null,
+                    showFavoritesOnly: false
+                },
+
+                init() {
+                    // Load favorites từ localStorage khi bắt đầu
+                    const savedFavs = localStorage.getItem('p-module-favorites');
+                    if (savedFavs) {
+                        try {
+                            this.favorites = JSON.parse(savedFavs);
+                        } catch (e) {
+                            console.error("Lỗi parse favorites từ localStorage", e);
+                        }
+                    }
+                },
+
+                // Toggle logic
+                toggleFavorite(id) {
+                    if (this.favorites.includes(id)) {
+                        this.favorites = this.favorites.filter(favId => favId !== id);
+                    } else {
+                        this.favorites.push(id);
+                    }
+                    // Save to localStorage
+                    localStorage.setItem('p-module-favorites', JSON.stringify(this.favorites));
+                },
+
+                // Ranh giới card: mở alert tạm thời hoặc để dev khác bắt sự kiện
+                viewDetails(id) {
+                    console.log("Xem chi tiết thẻ ID:", id);
+                    // alert("Tính năng xem chi tiết sẽ được tích hợp bởi Thành viên khác. \nID: " + id);
+                },
+
+                // Helpers
+                formatPrice(price) {
+                    if (!price || price === 0) return "Miễn phí";
+                    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+                },
+
+                formatCategory(cat) {
+                    // Viết hoa chữ cái đầu
+                    if (!cat) return '';
+                    return cat.charAt(0).toUpperCase() + cat.slice(1);
+                },
+
+                // Getters / Computed
+                get uniqueRegions() {
+                    const regions = this.places.map(p => p.region).filter(Boolean);
+                    return [...new Set(regions)].sort();
+                },
+
+                get uniqueCategories() {
+                    let cats = [];
+                    this.places.forEach(p => {
+                        if (p.category && Array.isArray(p.category)) {
+                            cats = cats.concat(p.category);
+                        }
+                    });
+                    return [...new Set(cats)].sort();
+                },
+
+                get filteredPlaces() {
+                    return this.places.filter(place => {
+                        // 1. Lọc theo text (tên)
+                        if (this.filters.searchQuery) {
+                            const query = this.filters.searchQuery.toLowerCase();
+                            if (!place.name.toLowerCase().includes(query)) {
+                                return false;
+                            }
+                        }
+
+                        // 2. Lọc theo vùng
+                        if (this.filters.region && place.region !== this.filters.region) {
+                            return false;
+                        }
+
+                        // 3. Lọc theo loại hình
+                        if (this.filters.category && !place.category.includes(this.filters.category)) {
+                            return false;
+                        }
+
+                        // 4. Lọc theo giá
+                        if (this.filters.maxPrice !== null && this.filters.maxPrice !== '') {
+                            const max = parseInt(this.filters.maxPrice);
+                            if (place.ticketPrice > max) {
+                                return false;
+                            }
+                        }
+
+                        // 5. Lọc theo yêu thích
+                        if (this.filters.showFavoritesOnly && !this.favorites.includes(place.id)) {
+                            return false;
+                        }
+
+                        return true;
+                    });
+                }
+            }));
+        });
+    </script>
+</body>
+</html>
